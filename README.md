@@ -8,7 +8,7 @@
 
 
 ```
-git command
+- git command list
 
 git init
 
@@ -25,6 +25,12 @@ git commit -a -m
 
 git add 
 git add -a
+
+git revert
+
+git checkout
+
+git merge
 
 
 ```

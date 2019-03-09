@@ -6,4 +6,25 @@
 
 ####깃 PUSH전 PULL 필수
 
-test
+
+```
+git command
+
+git init
+
+git push
+
+git pull
+
+git clone
+
+git reset --hard HEAD
+
+git commit -m
+git commit -a -m
+
+git add 
+git add -a
+
+
+```

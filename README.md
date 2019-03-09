@@ -32,3 +32,5 @@ git checkout
 
 git merge
 ```
+
+이 브랜치는 나의 길을 가겠소

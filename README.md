@@ -7,4 +7,30 @@
 ####깃 PUSH전 PULL 필수
 
 
-미친 테스트의 노래
+```
+- git command list
+
+git init
+
+git push
+
+git pull
+
+git clone
+
+git reset --hard HEAD
+
+git commit -m
+git commit -a -m
+
+git add 
+git add -a
+
+git revert
+
+git checkout
+
+git merge
+
+
+```

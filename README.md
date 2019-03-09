@@ -31,13 +31,4 @@ git revert
 git checkout
 
 git merge
-
-
 ```
-
-
-test 브랜치를 괴롭히기 위한!!
-rebch86이 작업을 하고, push를 하였다.
-
-
-저는 TEST2 브랜치 입니다.

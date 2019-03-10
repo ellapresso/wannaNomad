@@ -1,7 +1,7 @@
-console.log('스크립트 시작.');
 
-let posX = 0;
-let posY = 0;
+
+let posX = 175;
+let posY = 175;
 
 window.onload = function () {
     console.log('로딩 완료');
@@ -80,63 +80,84 @@ window.onload = function () {
     });
 
 
-    document.querySelector('body').addEventListener('keydown', function (event) {
-        const canvas2 = document.querySelector('.tutorial2');
-        const ctx = canvas2.getContext('2d');
-        ctx.strokeStyle = "green";
+    // 사각형을 그린다.
+    const canvas2 = document.querySelector('.tutorial2');
+    const ctx = canvas2.getContext('2d');
+    ctx.fillRect(posX, posY, 3,3);
 
-        // ctx.beginPath();
-        // ctx.moveTo(posX, posY);
-        // ctx.lineTo(posX, posY + lineLength);
-        // ctx.stroke();
-
-        switch (event.keyCode) {
-            case 40:
-                //down
-                if(posY < canvas2.height){
-                    // posY++;
-                    // console.log(posY);
-                    draw(ctx, posX, posY+1);
-                }
-                break;
-            case 38:
-                //up
-                if(posY > 0){
-                    // posY--;
-                    // console.log(posY);
-                    draw(ctx, posX, posY-1);
-                }
-
-                break;
-            case 37:
-                //left
-                if(posX > 0){
-                    // posX--;
-                    draw(ctx, posX-1, posY);
-                }
-
-                break;
-            case 39:
-                //right
-                if(posX < canvas2.width){
-                    // posX++;
-                    draw(ctx, posX+1, posY);
-                }
-
-                break;
-        }
-
-        // console.log(event);
-    });
-
+    document.querySelector('body').addEventListener('keydown', initDraw);
 };
 
-function draw(ctx, x, y) {
+function initDraw(event) {
+    const canvas2 = document.querySelector('.tutorial2');
+    const ctx = canvas2.getContext('2d');
+
+    switch (event.keyCode) {
+        case 40:
+            //down
+            if(posY < canvas2.height - 5){
+                draw(ctx, posX, posY+2, posX, posY);
+            } else {
+                gameOver(posX, posY);
+            }
+            break;
+        case 38:
+            //up
+            if(posY > 3){
+                draw(ctx, posX, posY-2, posX, posY);
+            } else {
+                gameOver(posX, posY);
+            }
+
+            break;
+        case 37:
+            //left
+            if(posX > 3){
+                draw(ctx, posX-2, posY, posX, posY);
+            } else {
+                gameOver(posX, posY);
+            }
+
+            break;
+        case 39:
+            //right
+            if(posX < canvas2.width - 5){
+                draw(ctx, posX+2, posY, posX, posY);
+            } else {
+                gameOver(posX, posY);
+            }
+
+            break;
+    }
+}
+
+function draw(ctx, changeX, changeY, originPosX, originPosY) {
+
+    // 이전에 그렸던 사각형만 지운다.
+    ctx.clearRect(originPosX, originPosY, 3,3);
+
+    // 사각형을 그린다.
+    ctx.fillRect(changeX, changeY, 3,3);
+
+    //선을 그린다.
+    ctx.strokeStyle = "green";
     ctx.beginPath();
-    ctx.moveTo(posX, posY);
-    ctx.lineTo(x, y);
+    ctx.moveTo(originPosX, originPosY);
+    ctx.lineTo(changeX, changeY);
     ctx.stroke();
 
-    posX = x;
-    posY = y;
+    posX = changeX;
+    posY = changeY;
+}
+
+
+function gameOver(originPosX, originPosY) {
+    alert('벽에 닿았습니다. 게임 종료!');
+    document.querySelector('body').removeEventListener('keydown', initDraw);
+    const canvas2 = document.querySelector('.tutorial2');
+    const ctx = canvas2.getContext('2d');
+
+    // 이전에 그렸던 사각형만 지운다.
+    ctx.clearRect(originPosX, originPosY, 3,3);
+
 }

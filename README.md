@@ -6,4 +6,31 @@
 
 ####깃 PUSH전 PULL 필수
 
-test
+
+```
+- git command list
+
+git init
+
+git push
+
+git pull
+
+git clone
+
+git reset --hard HEAD
+
+git commit -m
+git commit -a -m
+
+git add 
+git add -a
+
+git revert
+
+git checkout
+
+git merge
+```
+
+이 브랜치는 나의 길을 가겠소

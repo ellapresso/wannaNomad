@@ -98,7 +98,7 @@ function initDraw(event) {
             if(posY < canvas2.height - 5){
                 draw(ctx, posX, posY+2, posX, posY);
             } else {
-                gameOver();
+                gameOver(posX, posY);
             }
             break;
         case 38:
@@ -106,7 +106,7 @@ function initDraw(event) {
             if(posY > 3){
                 draw(ctx, posX, posY-2, posX, posY);
             } else {
-                gameOver();
+                gameOver(posX, posY);
             }
 
             break;
@@ -115,7 +115,7 @@ function initDraw(event) {
             if(posX > 3){
                 draw(ctx, posX-2, posY, posX, posY);
             } else {
-                gameOver();
+                gameOver(posX, posY);
             }
 
             break;
@@ -124,7 +124,7 @@ function initDraw(event) {
             if(posX < canvas2.width - 5){
                 draw(ctx, posX+2, posY, posX, posY);
             } else {
-                gameOver();
+                gameOver(posX, posY);
             }
 
             break;
@@ -151,7 +151,13 @@ function draw(ctx, changeX, changeY, originPosX, originPosY) {
 }
 
 
-function gameOver() {
+function gameOver(originPosX, originPosY) {
     alert('벽에 닿았습니다. 게임 종료!');
     document.querySelector('body').removeEventListener('keydown', initDraw);
+    const canvas2 = document.querySelector('.tutorial2');
+    const ctx = canvas2.getContext('2d');
+
+    // 이전에 그렸던 사각형만 지운다.
+    ctx.clearRect(originPosX, originPosY, 3,3);
+
 }

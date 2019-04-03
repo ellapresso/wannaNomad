@@ -3,14 +3,15 @@ const Router = require('koa-router');
 
 const app = new Koa();
 const router = new Router();
+const env = require('./config/.env');
 
 router.get('/', (ctx, next) => {
-    ctx.body = 'Koa';
+	ctx.body = 'koa';
 });
 
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.listen(3000, () => {
-    console.log('MAD server is listening to port 3000');
+app.listen(env.PORT, async () => {
+	console.log('connected');
 });

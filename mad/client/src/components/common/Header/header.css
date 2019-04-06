@@ -38,6 +38,27 @@ header .logo {
   letter-spacing: 1px;
   font-weight: 700;
 }
+header .loginWrap {
+  position: absolute;
+  top: 0;
+  right: 210px;
+  height: 100%;
+}
+header .loginWrap > div {
+  float: left;
+  height: 100%;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 5.4;
+}
+
+header .loginWrap .registor::after {
+  content: "/";
+  padding: 5px;
+}
 header .postBtn {
   position: absolute;
   top: 0;

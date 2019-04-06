@@ -1,0 +1,12 @@
+.tagWrap {
+  float: left;
+  margin: 10px 0;
+}
+
+/* antd custom */
+.ant-tag {
+  max-width: 80px;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  overflow: hidden;
+}

@@ -1,7 +1,37 @@
 .posthWrap {
   position: relative;
-  width: 80%;
-  margin: 0 auto;
-  background: #ddd;
+  overflow: hidden;
+  width: 75%;
+  margin: 0 auto !important;
   z-index: 100;
+}
+.posthWrap .postList {
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+}
+.posthWrap .postList:nth-child(odd) {
+  /* margin-right: 10px; */
+}
+.posthWrap .postList:nth-child(even) {
+  /* margin-left: 10px; */
+}
+.posthWrap .postList .postListHeader {
+  padding: 0 16px;
+  border-bottom: 1px solid #ddd;
+}
+.posthWrap .postList .postListHeader > p {
+  padding-top: 16px;
+  font-size: 20px;
+}
+.posthWrap .postList .postListHeader .postInfo {
+  padding: 5px 0px 16px;
+}
+.posthWrap .postList .postListBody {
+  height: 250px;
+}
+.posthWrap .postList .postListfooter {
+  overflow: hidden;
+  padding: 8px 16px;
+  border-top: 1px solid #ddd;
 }

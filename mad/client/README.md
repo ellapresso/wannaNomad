@@ -21,7 +21,3 @@ mad-blog : https://mad-blog.now.sh/
 
 1. https://poiemaweb.com/typescript-introduction
 2. https://github.com/velopert/typescript-react-sample
-
-## open API
-
-1. https://unsplash.com/developers : images

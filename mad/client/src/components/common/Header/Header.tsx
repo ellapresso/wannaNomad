@@ -5,6 +5,7 @@ import "./header.css";
 const MenuBtn = () => {
   return <div className="menuBtn">Menu</div>;
 };
+
 const Logo = () => {
   return (
     <Link href="/">
@@ -12,6 +13,7 @@ const Logo = () => {
     </Link>
   );
 };
+
 const PostBtn = () => {
   return (
     <Link href="/write">
@@ -20,11 +22,21 @@ const PostBtn = () => {
   );
 };
 
+const Registor = () => {
+  return (
+    <div className="loginWrap">
+      <div className="registor">registor</div>
+      <div className="login">login</div>
+    </div>
+  );
+};
+
 const Header = () => {
   return (
     <header>
       <MenuBtn />
       <Logo />
+      <Registor />
       <PostBtn />
     </header>
   );

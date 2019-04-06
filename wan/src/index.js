@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../crawlingProject/client/App';
+import App from '../crawlingProject/client/js/App';
  
 const title = 'Test';
 

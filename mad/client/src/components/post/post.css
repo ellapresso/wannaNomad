@@ -1,0 +1,7 @@
+.posthWrap {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  background: #ddd;
+  z-index: 100;
+}

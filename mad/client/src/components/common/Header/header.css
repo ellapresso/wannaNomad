@@ -1,0 +1,55 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(170, 170, 170, 0.4);
+  -moz-box-shadow: 0px 0px 20px 0px rgba(170, 170, 170, 0.4);
+  box-shadow: 0px 0px 20px 0px rgba(170, 170, 170, 0.4);
+  z-index: 1000;
+}
+header > div {
+  cursor: pointer;
+}
+
+header .menuBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 100%;
+  border-right: 1px solid #ddd;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 3.7;
+}
+header .logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-55%);
+  font-family: "Rajdhani", sans-serif;
+  font-size: 30px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+header .postBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 3.7;
+  color: #fff;
+  background: #000;
+}

@@ -1,0 +1,20 @@
+{
+	"name": "server",
+	"version": "1.0.0",
+	"description": "MAD server",
+	"main": "index.js",
+	"scripts": {
+		"test": "test",
+		"start": "node src"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"koa": "^2.7.0",
+		"koa-router": "^7.4.0"
+	},
+	"devDependencies": {},
+	"repository": {
+		"private": true
+	}
+}

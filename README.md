@@ -35,4 +35,10 @@ git revert
 git checkout
 
 git merge
+
+- git submodule 관련 명령어
+
+git submodule init
+git submodule update
+
 ```

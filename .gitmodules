@@ -1,0 +1,3 @@
+[submodule "vip/oEmbed-react"]
+	path = vip/oEmbed-react
+	url = https://github.com/rebch86/oEmbed-react.git

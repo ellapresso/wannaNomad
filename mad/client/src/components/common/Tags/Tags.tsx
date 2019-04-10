@@ -10,7 +10,7 @@ const TagItem = ({ tagList }: TagItem) => {
   const tagNum = Math.round(Math.random() * (tagColor.length - 1));
   return (
     <Tooltip placement="top" title={tagList}>
-      <Tag color={tagColor[tagNum]}>{tagList}</Tag>
+      <Tag color="#108ee9">{tagList}</Tag>
     </Tooltip>
   );
 };

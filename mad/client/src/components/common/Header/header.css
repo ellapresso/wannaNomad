@@ -13,7 +13,6 @@ header {
 header > div {
   cursor: pointer;
 }
-
 header .menuBtn {
   position: absolute;
   top: 0;
@@ -54,7 +53,6 @@ header .loginWrap > div {
   letter-spacing: 1px;
   line-height: 5.4;
 }
-
 header .loginWrap .registor::after {
   content: "/";
   padding: 5px;

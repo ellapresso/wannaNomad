@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { WriteProvider } from "../contexts/writeContext";
-import EditorConatiner from "../containers/write/EditorConatiner";
-import PreviewContainer from "../containers/write/PreviewContainer";
+import HeaderContainer from "../containers/common/HeaderContainer";
+import WriteConatiner from "../containers/write/WriteConatiner";
 
-interface Props {}
+interface Props {
+  router: object;
+}
 
 interface State {}
 
@@ -13,9 +15,8 @@ class Write extends Component<Props, State> {
   render() {
     return (
       <WriteProvider>
-        <div>Write121212</div>
-        <EditorConatiner />
-        <PreviewContainer />
+        <HeaderContainer type="post" />
+        <WriteConatiner />
       </WriteProvider>
     );
   }

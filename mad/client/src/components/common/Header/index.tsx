@@ -1,2 +1,4 @@
-import Header from "./Header";
-export default Header;
+export { default as PostHeader } from "./PostHeader";
+
+import MainHeader from "./MainHeader";
+export default MainHeader;

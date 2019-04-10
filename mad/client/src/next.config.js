@@ -3,6 +3,6 @@ const withCss = require("@zeit/next-css");
 
 module.exports = withTypescript(
   withCss({
-    target: "serverless"
+    // target: "serverless"
   })
 );

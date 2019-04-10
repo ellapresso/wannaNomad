@@ -32,7 +32,7 @@ class PostContainer extends Component<Props, State> {
       backgroundImage: `url(/static/images/bg03.jpg)`
     };
     return (
-      <div className="postWrap" style={style}>
+      <div className="contentsWrap postWrap" style={style}>
         <Search onChange={this.onChange} />
         <Post />
       </div>

@@ -1,7 +1,10 @@
 import React, { Component, Fragment } from "react";
-import Header from "../../components/common/Header/Header";
+import MainHeader from "../../components/common/Header";
+import { PostHeader } from "../../components/common/Header";
 
-interface Props {}
+interface Props {
+  type: string;
+}
 
 interface State {}
 
@@ -9,10 +12,9 @@ class HeaderContainer extends Component<Props, State> {
   state: State = {};
 
   render() {
+    const { type } = this.props;
     return (
-      <Fragment>
-        <Header />
-      </Fragment>
+      <Fragment>{type === "common" ? <MainHeader /> : <PostHeader />}</Fragment>
     );
   }
 }

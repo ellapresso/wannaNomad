@@ -6,15 +6,9 @@
   z-index: 100;
 }
 .posthWrap .postList {
-  margin-bottom: 16px;
+  margin-bottom: 32px;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
-}
-.posthWrap .postList:nth-child(odd) {
-  /* margin-right: 10px; */
-}
-.posthWrap .postList:nth-child(even) {
-  /* margin-left: 10px; */
 }
 .posthWrap .postList .postListHeader {
   padding: 0 16px;
@@ -25,10 +19,21 @@
   font-size: 20px;
 }
 .posthWrap .postList .postListHeader .postInfo {
+  overflow: hidden;
   padding: 5px 0px 16px;
+  line-height: 32px;
+}
+.posthWrap .postList .postListHeader .postInfo span {
+  display: inline-block;
+  line-height: 32px;
+}
+.posthWrap .postList .postListHeader .postDate {
+  float: right;
 }
 .posthWrap .postList .postListBody {
-  height: 250px;
+  overflow: auto;
+  height: 350px;
+  padding: 16px;
 }
 .posthWrap .postList .postListfooter {
   overflow: hidden;

@@ -1,10 +1,10 @@
 @charset "UTF-8";
 /* body, 타이포그래피 등 기본 스타일 설정 */
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic|Rajdhani:400,700");
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:400|Rajdhani:400,700");
 
 body {
   box-sizing: border-box;
-  font-family: "Nanum Gothic", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   color: #000;
 }
 
@@ -29,13 +29,14 @@ p {
   min-height: 100%;
 }
 
-.postWrap {
+.contentsWrap {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   padding-top: 80px;
-
+}
+.postWrap {
   background-size: cover;
   background-repeat: no-repeat;
 }

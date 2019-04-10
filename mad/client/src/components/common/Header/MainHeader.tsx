@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Icon } from "antd";
 import "./header.css";
 
 const MenuBtn = () => {
@@ -31,7 +30,7 @@ const Registor = () => {
   );
 };
 
-const Header = () => {
+const MainHeader = () => {
   return (
     <header>
       <MenuBtn />
@@ -42,4 +41,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default MainHeader;

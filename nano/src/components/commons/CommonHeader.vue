@@ -10,6 +10,20 @@
       scroll-target="#scrolling-techniques"
       app
     >
+      <v-snackbar
+        v-model="snackbarConfig.snackbar"
+        :bottom="snackbarConfig.y === 'bottom'"
+        :left="snackbarConfig.x === 'left'"
+        :multi-line="snackbarConfig.mode === 'multi-line'"
+        :right="snackbarConfig.x === 'right'"
+        :timeout="snackbarConfig.timeout"
+        :top="snackbarConfig.y === 'top'"
+        :vertical="snackbarConfig.mode === 'vertical'"
+      >
+          {{ snackbarConfig.text }}
+          <v-btn color="pink" flat @click="snackbar = false">닫기</v-btn>
+      </v-snackbar>
+
       <v-toolbar-side-icon @click="changeDrawer();"></v-toolbar-side-icon>
       <v-toolbar-title>NANO</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -24,7 +38,6 @@
         <v-icon>more_vert</v-icon>
       </v-btn>
     </v-toolbar>
-    
 </template>
 
 <script>
@@ -40,9 +53,6 @@ export default {
   components : {
   },
   methods: {
-    clickMe: () => {
-      this.$emit("childClicked");
-    },
     changeDrawer : function(){
         this.$store.commit('setDrawer');
     },
@@ -54,10 +64,16 @@ export default {
         get() {
             return this.$store.getters.getTitle;
         }
+    },
+    snackbarConfig : {
+        get() {
+            return this.$store.state.snackbarConfig;
+        }
     }
   },
   data() {
-        return {};
+        return {
+        };
     }
 };
 </script>

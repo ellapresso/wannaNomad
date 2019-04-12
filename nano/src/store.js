@@ -31,6 +31,14 @@ export default new Vuex.Store({
         { title: "홈", icon: "question_answer", goto: "/" },
         { title: "로그인", icon: "dashboard", goto: "/login" }
       ],
+      snackbarConfig : {
+          snackbar: false,
+          y: "top",
+          x: null,
+          mode: "",
+          timeout: 3000,
+          text: ""
+      },
   },
   getters : {
     getFirebase(state) {
@@ -46,8 +54,10 @@ export default new Vuex.Store({
       return state.loginStatus;
     },
     getTitles(state) {
-
       return state.titles;
+    },
+    getSnackbarConfig(state) {
+      return state.snackbarConfig;
     }
   },
   // 동기적 로직을 정의
@@ -64,6 +74,11 @@ export default new Vuex.Store({
       },
       setLoginStatus(state, loginStatus) {
         state.loginStatus = loginStatus;
+      },
+      setSnackbarConfig(state, obj) {
+        state.snackbarConfig.snackbar = obj.flag;
+        state.snackbarConfig.text = obj.message;
+        state.snackbarConfig.timeout = obj.timeout;
       },
   },
   // 비동기적 로직을 정의

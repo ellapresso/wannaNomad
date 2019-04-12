@@ -69,11 +69,11 @@ export default {
     data: () => ({
         email: "",
         password: "",
-        checkbox: false
+        checkbox: false,
     }),
     created() {
-        if(this.$cookies.get('loginSaveEmail')) {
-             this.email = this.$cookies.get('loginSaveEmail');
+        if (this.$cookies.get("loginSaveEmail")) {
+            this.email = this.$cookies.get("loginSaveEmail");
         }
     },
     mounted() {},
@@ -106,27 +106,34 @@ export default {
 
             console.log(this.checkbox);
 
-            if(!this.emailErrors.length && !this.passwordErrors.length){
+            if (!this.emailErrors.length && !this.passwordErrors.length) {
+
+                this.$store.commit('setSnackbarConfig', {
+                                                          flag : true, 
+                                                          message : '로그인 시도 중입니다.',
+                                                          timeout : 2000,
+                                                        });
+
                 this.$store.state.firebase
                     .auth()
                     .signInWithEmailAndPassword(this.email, this.password)
                     .then(res => {
-                        alert('로그인을 환영합니다.');
+                        alert("로그인을 환영합니다.");
 
                         // 로그인 아이디 저장
-                        if(this.checkbox) {
-                          this.$cookies.set('loginSaveEmail', this.email);
-                        }else {
-                          this.$cookies.set('loginSaveEmail', '');
+                        if (this.checkbox) {
+                            this.$cookies.set("loginSaveEmail", this.email);
+                        } else {
+                            this.$cookies.set("loginSaveEmail", "");
                         }
 
                         // 일단 대충 result 정보만..
-                        this.$store.commit('setLoginStatus', true);
-                        this.$store.state.router.push({path : '/'});
+                        this.$store.commit("setLoginStatus", true);
+                        this.$store.state.router.push({ path: "/" });
                     })
                     .catch(function(error) {
                         // Handle Errors here.
-                        alert('로그인에 실패하였습니다. 다시 시도해주세요.');
+                        alert("로그인에 실패하였습니다. 다시 시도해주세요.");
                     });
             }
         },
@@ -138,8 +145,8 @@ export default {
             this.password = "";
         },
         gotoJoin() {
-            this.$router.push({path: '/join'});
-        },
+            this.$router.push({ path: "/join" });
+        }
     }
 };
 </script>

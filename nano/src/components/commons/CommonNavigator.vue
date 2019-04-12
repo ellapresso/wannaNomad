@@ -56,6 +56,11 @@ export default {
       if(item.goto && item.goto === '/logout') {
         this.$store.state.firebase.auth().signOut().then(() => {
           // Sign-out successful.
+          this.$store.commit('setSnackbarConfig', {
+                                                    flag : true, 
+                                                    message : '로그아웃을 시도 중입니다.',
+                                                    timeout : 250,
+                                                  });
           alert('로그아웃에 성공하였습니다.');
           this.$store.commit('setLoginStatus', false);
           this.$router.push({ path: '/' });

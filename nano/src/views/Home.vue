@@ -1,19 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-    <Header></Header>
-  </div>
+    <v-jumbotron color="primary" dark>
+    <v-container fill-height>
+      <v-layout align-center>
+        <v-flex text-xs-center>
+          <h3 class="display-3">Wanna Nomad?</h3>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </v-jumbotron>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
-  name: "home",
-  components: {
-    HelloWorld
-  }
-};
+    name : 'Home',
+    created() {
+        this.$store.dispatch('checkUsersLogin', this.$router);
+    },
+}
 </script>
+
+<style>
+
+</style>

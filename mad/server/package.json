@@ -1,21 +1,36 @@
 {
-	"name": "server",
-	"version": "1.0.0",
-	"description": "MAD server",
-	"main": "index.js",
-	"scripts": {
-		"test": "test",
-		"start": "node src"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@koa/cors": "^2.2.3",
-		"koa": "^2.7.0",
-		"koa-router": "^7.4.0"
-	},
-	"devDependencies": {},
-	"repository": {
-		"private": true
-	}
+    "name": "mad_server",
+    "version": "1.0.0",
+    "description": "mad-blog : https:/",
+    "main": "server/index.js",
+    "dependencies": {
+        "@koa/cors": "^3.0.0",
+        "dotenv": "^7.0.0",
+        "koa": "^2.7.0",
+        "koa-bodyparser": "^4.2.1",
+        "koa-helmet": "^4.1.0",
+        "koa-respond": "^2.1.0",
+        "koa-router": "^7.4.0",
+        "mysql2": "^1.6.5",
+        "passport": "^0.4.0",
+        "passport-kakao": "0.0.5"
+    },
+    "devDependencies": {
+        "eslint": "^5.16.0",
+        "eslint-config-google": "^0.12.0"
+    },
+    "scripts": {
+        "start": "node server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ellapresso/mad_server.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ellapresso/mad_server/issues"
+    },
+    "homepage": "https://github.com/ellapresso/mad_server#readme"
 }

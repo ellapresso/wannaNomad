@@ -1,17 +1,20 @@
 ## Project Stack
 
-mad-blog : https:/
+mad-blog(client) : https://mad-blog.now.sh/
 
-### Server
+## Server
 
-- Node +) koa
-
-## ref
-
-### Nodejs
-
-1.
-
-## open API
-
-1.
+-   Node
+    -   koa
+    -   koa-bodypaser
+    -   koa-helmet
+    -   koa-respond
+    -   koa-router
+    -   @koa/cors
+    -   dotenv
+    -   mysql2
+    -   passport
+    -   passport-kakao
+-   eslint
+    -   eslint
+    -   eslint-config-google

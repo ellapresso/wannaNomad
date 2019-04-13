@@ -11,12 +11,15 @@ require("prismjs/components/prism-jsx.min.js");
 require("prismjs/components/prism-css.min.js");
 
 interface Props {
+  type: string;
   markdown: string;
 }
-interface State {}
+interface State {
+  html: string;
+}
 
 class CodeView extends Component<Props, State> {
-  state = {
+  state: State = {
     html: ""
   };
 
@@ -63,6 +66,7 @@ class CodeView extends Component<Props, State> {
 
   render() {
     const { html } = this.state;
+    const { type } = this.props;
 
     // React 에서 html 을 렌더링 하려면 객체를 만들어서 내부에
     // __html 값을 설정해야합니다.
@@ -71,7 +75,9 @@ class CodeView extends Component<Props, State> {
     };
 
     // 그리고, dangerouslySetInnerHTML 값에 해당 객체를 넣어주면 됩니다.
-    return <div className="codeView" dangerouslySetInnerHTML={markup} />;
+    return (
+      <div className={`codeView ${type}`} dangerouslySetInnerHTML={markup} />
+    );
   }
 }
 

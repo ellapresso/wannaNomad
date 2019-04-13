@@ -1,0 +1,15 @@
+.editor {
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 16px 0;
+  width: 50%;
+  height: 100%;
+  background: #263238;
+}
+
+.editor .react-codemirror2,
+.editor .CodeMirror {
+  height: 100%;
+}

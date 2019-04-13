@@ -36,7 +36,7 @@ const PostItem = ({ PostData }) => {
         </div>
       </div>
       <div className="postListBody">
-        <CodeView markdown={PostData.body} />
+        <CodeView markdown={PostData.body} type="post" />
       </div>
       <div className="postListfooter">
         <Tags tagDatas={PostData.tag} />

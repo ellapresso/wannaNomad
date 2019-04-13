@@ -15,12 +15,15 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "antd": "^3.16.1",
+    "codemirror": "^5.45.0",
     "marked": "^0.6.2",
     "moment": "^2.24.0",
     "next": "^8.0.3",
     "prismjs": "^1.16.0",
     "react": "^16.8.6",
+    "react-codemirror2": "^5.1.0",
     "react-dom": "^16.8.6",
+    "react-markdown": "^4.0.6",
     "typescript": "^3.4.1"
   },
   "devDependencies": {}

@@ -72,3 +72,15 @@ header .postBtn {
   color: #fff;
   background: #000;
 }
+
+.postHeader .backBtn {
+  float: left;
+  margin: 24px 16px;
+}
+.postHeader input {
+  float: left;
+  width: 500px;
+  margin: 16px 0;
+  border: none;
+  font-size: 30px;
+}

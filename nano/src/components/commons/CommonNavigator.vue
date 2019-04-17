@@ -18,12 +18,12 @@
     <v-list class="pt-0" dense>
       <v-divider></v-divider>
 
-      <v-list-tile v-for="item in items" :key="item.title">
+      <v-list-tile v-for="item in items" :key="item.title" router :to="item.goto" exact>
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
 
-        <v-list-tile-content @click="goToLink(item);">
+        <v-list-tile-content>
           <v-list-tile-title>{{ item.title }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
@@ -53,15 +53,13 @@ export default {
     goToLink(item) {
       //this.$store.commit('setTitle', item.title);
 
+      debugger;
+
       if(item.goto && item.goto === '/logout') {
-        this.$store.state.firebase.auth().signOut().then(() => {
+        this.$store.state.firebase.auth().signOut().then((res) => {
           // Sign-out successful.
-          this.$store.commit('setSnackbarConfig', {
-                                                    flag : true, 
-                                                    message : '로그아웃을 시도 중입니다.',
-                                                    timeout : 250,
-                                                  });
           alert('로그아웃에 성공하였습니다.');
+
           this.$store.commit('setLoginStatus', false);
           this.$router.push({ path: '/' });
         }).catch(function(error) {
@@ -90,7 +88,6 @@ export default {
     // 양방향 바인딩시에는 setter 도 필요하다.
     items: {
         get: function() {
-          console.log(this.$store.state.loginStatus);
           return this.$store.state.titles;
         }
     },

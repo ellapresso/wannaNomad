@@ -11,8 +11,9 @@
 </template>
 
 <script>
-import CommonHeader from './components/commons/CommonHeader'
-import CommonNavigator from './components/commons/CommonNavigator'
+import CommonHeader from './components/commons/CommonHeader';
+import CommonNavigator from './components/commons/CommonNavigator';
+import {mapActions, mapMutations} from 'vuex';
 
 export default {
   name: 'App',
@@ -22,12 +23,11 @@ export default {
   },
   data () {
     return {
-      //
     }
   },
   created : function(){
-      this.$store.commit('setRouter', this.$router);
-      this.$store.dispatch('checkUsersLogin');
+  },
+  methods : {
   }
 }
 </script>

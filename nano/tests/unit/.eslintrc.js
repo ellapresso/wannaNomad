@@ -1,5 +1,10 @@
 module.exports = {
   env: {
-    jest: true
+    jest: false,
+    node : true
+  },
+  rules : {
+    'no-console' : true,
+    'no-debugger' : true
   }
 };

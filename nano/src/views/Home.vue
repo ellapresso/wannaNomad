@@ -14,7 +14,6 @@
 export default {
     name : 'Home',
     created() {
-        this.$store.dispatch('checkUsersLogin', this.$router);
     },
 }
 </script>

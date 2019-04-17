@@ -1,5 +1,5 @@
 <template>
-    <v-flex class md8 offset-md2>
+    <v-flex class md8 offset-md2 ref="loadingContainer">
         <form id="login-form">
             <v-flex id="login-input-container">
                 <v-text-field
@@ -39,12 +39,8 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import {
-    required,
-    minLength,
-    maxLength,
-    email
-} from "vuelidate/lib/validators";
+import {required, minLength, maxLength, email} from "vuelidate/lib/validators";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
     name: "login",
@@ -99,55 +95,30 @@ export default {
             return errors;
         }
     },
-
     methods: {
+        ...mapActions(['firebaseEmailLogin', 'gotoJoin']),
         submit() {
             this.$v.$touch();
 
-            console.log(this.checkbox);
-
-            if (!this.emailErrors.length && !this.passwordErrors.length) {
-
-                this.$store.commit('setSnackbarConfig', {
-                                                          flag : true, 
-                                                          message : '로그인 시도 중입니다.',
-                                                          timeout : 2000,
-                                                        });
-
-                this.$store.state.firebase
-                    .auth()
-                    .signInWithEmailAndPassword(this.email, this.password)
-                    .then(res => {
-                        alert("로그인을 환영합니다.");
-
-                        // 로그인 아이디 저장
-                        if (this.checkbox) {
-                            this.$cookies.set("loginSaveEmail", this.email);
-                        } else {
-                            this.$cookies.set("loginSaveEmail", "");
-                        }
-
-                        // 일단 대충 result 정보만..
-                        this.$store.commit("setLoginStatus", true);
-                        this.$store.state.router.push({ path: "/" });
-                    })
-                    .catch(function(error) {
-                        // Handle Errors here.
-                        alert("로그인에 실패하였습니다. 다시 시도해주세요.");
-                    });
-            }
+            const loginObj = {
+                $v    : this.$v,
+                email : this.email,
+                password : this.password,
+                checkbox : this.checkbox,
+                emailErrors : this.emailErrors,
+                passwordErrors : this.passwordErrors
+            };
+            this.firebaseEmailLogin(loginObj);
         },
         clear() {
-            // $v -> $v refers to Vuelidate's special object used for storing validation states.
-            // $event is a special object used to store and retrieve events by Vue.js.
             this.$v.$reset();
             this.email = "";
             this.password = "";
         },
-        gotoJoin() {
-            this.$router.push({ path: "/join" });
-        }
-    }
+    },
+    created() {
+        
+    },
 };
 </script>
 

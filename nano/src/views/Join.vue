@@ -105,9 +105,6 @@ export default {
                 errors.push("비밀번호 확인은 8~20자리 입니다.");
             }
 
-            console.log(this.password);
-            console.log(this.passwordConfirm);
-
             if(!this.$v.passwordConfirm.required || (this.passwordConfirm !== this.password)){
                 errors.push("비밀번호를 확인해주세요.");
             }
@@ -124,7 +121,6 @@ export default {
                     .auth()
                     .createUserWithEmailAndPassword(this.email, this.password)
                     .then(res => {
-                        console.log(res);
                         alert('회원가입이 완료되었습니다.');
                         // 일단 대충 result 정보만..
                         this.$store.commit('setLoginStatus', true);
@@ -138,8 +134,6 @@ export default {
             }
         },
         clear() {
-            // $v -> $v refers to Vuelidate's special object used for storing validation states.
-            // $event is a special object used to store and retrieve events by Vue.js.
             this.$v.$reset();
             this.email = "";
             this.password = "";

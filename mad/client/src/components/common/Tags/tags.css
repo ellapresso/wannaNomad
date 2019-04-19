@@ -5,9 +5,5 @@
 
 /* antd custom */
 .ant-tag {
-  max-width: 80px;
-  text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  overflow: hidden;
   border-radius: 10px;
 }

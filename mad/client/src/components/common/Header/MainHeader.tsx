@@ -21,21 +21,22 @@ const PostBtn = () => {
   );
 };
 
-const Registor = () => {
+const Registor = ({ onModal }) => {
   return (
     <div className="loginWrap">
-      <div className="registor">registor</div>
-      <div className="login">login</div>
+      <div className="login" onClick={onModal}>
+        SNS login
+      </div>
     </div>
   );
 };
 
-const MainHeader = () => {
+const MainHeader = ({ onModal }) => {
   return (
     <header>
-      <MenuBtn />
+      {/* <MenuBtn /> */}
       <Logo />
-      <Registor />
+      <Registor onModal={onModal} />
       <PostBtn />
     </header>
   );

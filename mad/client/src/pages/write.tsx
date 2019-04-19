@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { WriteProvider } from "../contexts/writeContext";
 import HeaderContainer from "../containers/common/HeaderContainer";
 import WriteConatiner from "../containers/write/WriteConatiner";
+import { WriteProvider } from "../contexts/writeContext";
 
 interface Props {
   router: object;

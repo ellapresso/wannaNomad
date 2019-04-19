@@ -17,11 +17,19 @@ export default class Error extends React.Component<Props> {
 
   render() {
     return (
-      <p>
-        {this.props.statusCode
-          ? `An error ${this.props.statusCode} occurred on server`
-          : "An error occurred on client"}
-      </p>
+      <div id="notfound">
+        <div className="notfound">
+          <div className="notfound-404">
+            <h1>Oops!</h1>
+          </div>
+          <h2>
+            {this.props.statusCode
+              ? `An error ${this.props.statusCode} occurred on server`
+              : "An error occurred on client"}
+          </h2>
+          <a href="/">Go To Homepage</a>
+        </div>
+      </div>
     );
   }
 }

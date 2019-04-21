@@ -40,7 +40,8 @@
 <script>
 import { validationMixin } from "vuelidate";
 import {required, minLength, maxLength, email} from "vuelidate/lib/validators";
-import { mapGetters, mapActions } from 'vuex';
+import {createNamespacedHelpers} from 'vuex';
+const { mapState, mapActions } = createNamespacedHelpers('ui/member');
 
 export default {
     name: "login",
@@ -63,8 +64,8 @@ export default {
     },
 
     data: () => ({
-        email: "",
-        password: "",
+        email: "test1234@naver.com",
+        password: "12341234",
         checkbox: false,
     }),
     created() {

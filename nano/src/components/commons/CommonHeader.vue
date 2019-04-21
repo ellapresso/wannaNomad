@@ -24,7 +24,7 @@
           <v-btn color="pink" flat @click="snackbar = false">닫기</v-btn>
       </v-snackbar>
 
-      <v-toolbar-side-icon @click="changeDrawer();"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="setDrawer(true)"></v-toolbar-side-icon>
       <v-toolbar-title>NANO</v-toolbar-title>
       <v-spacer></v-spacer>
 
@@ -32,7 +32,12 @@
         <v-icon>search</v-icon>
       </v-btn>
       <v-btn icon>
-        <v-icon>favorite</v-icon>
+        <v-badge  overlap color="orange">
+          <template v-slot:badge>
+            <v-icon>notifications</v-icon>
+          </template>
+          <v-icon>mail</v-icon>
+        </v-badge>
       </v-btn>
       <v-btn icon>
         <v-icon>more_vert</v-icon>
@@ -42,39 +47,22 @@
 
 <script>
 
+import { createNamespacedHelpers } from 'vuex'
+const { mapActions, mapGetters } = createNamespacedHelpers('ui');
+
 export default {
   name: "CommonHeader",
   // 자식컴포넌트는, props를 정의함으로써
   // 부모컴포넌트가 자식컴포넌트 데이터를 변경할 수 있도록 한다.
-  props: {
-    headerMsg: String,
-    content: String
-  },
-  components : {
-  },
   methods: {
-    changeDrawer : function(){
-        this.$store.commit('setDrawer');
-    },
-  },
-  created: function() {
+    ...mapActions(['setDrawer']),
   },
   computed : {
-    title : {
-        get() {
-            return this.$store.getters.getTitle;
-        }
-    },
-    snackbarConfig : {
-        get() {
-            return this.$store.state.snackbarConfig;
-        }
-    }
+    ...mapGetters({
+        title : 'getTitles',
+        snackbarConfig : 'getsnackbarConfig'
+    }),
   },
-  data() {
-        return {
-        };
-    }
 };
 </script>
 

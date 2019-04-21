@@ -9,8 +9,6 @@ import firebase from './firebase';
 Vue.use(Router);
 
 function getCurrentUser() {
-    const state = store.state;
-
     let userLoaded = false;
     return new Promise((resolve, reject) => {
       if (userLoaded) {
@@ -25,21 +23,23 @@ function getCurrentUser() {
 }
 
 const preventAccessWithoutLogin = async function(to, from, next) {
-    const state = store.state;
+    const uiState = store.state.ui;
+    const memberState = uiState.member;
+    
     const curUser = await getCurrentUser();
   
     if (curUser) {
-      state.titles[1].title = "로그아웃";
-      state.titles[1].goto = "/logout";
+      uiState.titles[1].title = "로그아웃";
+      uiState.titles[1].goto = "/logout";
 
-      state.loginStatus = true;
+      memberState.loginStatus = true;
       next();
     } else {
         if (to.path !== "/login" && to.path !== "/join") {
             alert("로그인 후 이용해주세요.");
-            state.titles[1].title = "로그인";
-            state.titles[1].goto = "/login";
-            state.loginStatus = false;
+            uiState.titles[1].title = "로그인";
+            uiState.titles[1].goto = "/login";
+            uiState.loginStatus = false;
 
             next({path: '/login'});
         }
@@ -47,13 +47,15 @@ const preventAccessWithoutLogin = async function(to, from, next) {
 };
 
 const doLogout = function(to, from, next) {
-    const state = store.state;  
+    const uiState = store.state.ui; 
+    const memberState = uiState.member;
+
     firebase.auth().signOut().then((res) => {
       alert('로그아웃에 성공하였습니다.');
-      state.titles[1].title = "로그인";
-      state.titles[1].goto = "/login";
+      uiState.titles[1].title = "로그인";
+      uiState.titles[1].goto = "/login";
 
-      state.loginStatus = false;
+      memberState.loginStatus = false;
       next('/login');
     }).catch(function(error) {
       console.log(error);

@@ -17,6 +17,7 @@ Vue.use(Vuetify);
 Vue.use(VueCookies);
 Vue.use(Loading);
 
+
 new Vue({
   router,
   store,

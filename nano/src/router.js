@@ -33,13 +33,16 @@ const preventAccessWithoutLogin = async function(to, from, next) {
       uiState.titles[1].goto = "/logout";
 
       memberState.loginStatus = true;
+      memberState.userInfo = curUser;
+
       next();
     } else {
         if (to.path !== "/login" && to.path !== "/join") {
             alert("로그인 후 이용해주세요.");
             uiState.titles[1].title = "로그인";
             uiState.titles[1].goto = "/login";
-            uiState.loginStatus = false;
+            memberState.loginStatus = false;
+            memberState.userInfo = undefined;
 
             next({path: '/login'});
         }
@@ -56,6 +59,7 @@ const doLogout = function(to, from, next) {
       uiState.titles[1].goto = "/login";
 
       memberState.loginStatus = false;
+      memberState.userInfo = undefined;
       next('/login');
     }).catch(function(error) {
       console.log(error);

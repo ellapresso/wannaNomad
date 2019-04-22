@@ -39,7 +39,6 @@ const uiModule = {
             state.title = value;
         },
         setSnackbarConfig(state, snackbarObj) {
-            debugger;
             state.snackbarConfig.snackbar = snackbarObj.flag;
             state.snackbarConfig.text = snackbarObj.message;
             state.snackbarConfig.timeout = snackbarObj.timeout;

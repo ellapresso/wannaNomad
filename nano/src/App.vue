@@ -13,7 +13,6 @@
 <script>
 import CommonHeader from './components/commons/CommonHeader';
 import CommonNavigator from './components/commons/CommonNavigator';
-import {mapActions, mapMutations} from 'vuex';
 
 export default {
   name: 'App',

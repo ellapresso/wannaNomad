@@ -8,7 +8,12 @@ const memberModule = {
         loginStatus: false,
     },
     getters : {
-
+        getUserInfo(state) {
+            return state.userInfo;
+        },
+        getLoginStatus(state) {
+            return state.loginStatus;
+        }
     },
     mutations : {
         setLoginStatus(state, loginStatus) {

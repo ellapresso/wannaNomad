@@ -6,7 +6,7 @@ const Test = {
     getTest: () => {
         return DB.madDb
             .promise()
-            .query('select ')
+            .query('select 1')
             .then(([rows]) => {
                 return rows;
             });

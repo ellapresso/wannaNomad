@@ -19,6 +19,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
           />
+          <script src="//developers.kakao.com/sdk/js/kakao.min.js" />
         </Head>
         <body>
           <Main />

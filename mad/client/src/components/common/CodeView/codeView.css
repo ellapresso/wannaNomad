@@ -10,6 +10,7 @@
 .codeView h1 {
   padding: 5px 0;
   border-bottom: 2px solid #ccc;
+  font-weight: 500;
 }
 .codeView h2 {
   padding: 5px 0;
@@ -22,8 +23,22 @@
   text-decoration: underline;
   color: #0366d6;
 }
-.codeView blockquote p {
+.codeView blockquote {
   margin: 16px 0;
   padding: 10px;
   border-left: 5px solid #ddd;
+}
+
+.codeView strong {
+  font-weight: 700;
+  text-decoration: underline;
+}
+.codeView code {
+  display: inline-block;
+  border: 1px solid rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+  padding: 1px 3px;
+  line-height: 1;
+  color: #000;
+  background-color: rgba(27, 31, 35, 0.05);
 }

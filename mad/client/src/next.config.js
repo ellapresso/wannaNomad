@@ -6,4 +6,3 @@ module.exports = withTypescript(
     target: "serverless"
   })
 );
-ç

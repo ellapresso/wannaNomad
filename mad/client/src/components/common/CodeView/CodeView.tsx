@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { WriteConsumer } from "../../../contexts/writeContext";
 import marked from "marked";
 import "./codeView.css";
 
@@ -13,19 +14,26 @@ require("prismjs/components/prism-css.min.js");
 interface Props {
   type: string;
   markdown: string;
+  setContents?: any;
 }
 interface State {
   html: string;
 }
 
-class CodeView extends Component<Props, State> {
-  state: State = {
-    html: ""
-  };
+export class Code extends Component<Props, State> {
+  constructor(props) {
+    super(props);
+    const { markdown } = props;
 
-  renderMarkdown = () => {
+    this.state = {
+      html: markdown
+        ? marked(props.markdown, { breaks: true, sanitize: true })
+        : ""
+    };
+  }
+  _renderMarkdown = () => {
     const { markdown } = this.props;
-    // 마크다운이 존재하지 않는다면 공백처리
+
     if (!markdown) {
       this.setState({ html: "" });
       return;
@@ -38,23 +46,11 @@ class CodeView extends Component<Props, State> {
     });
   };
 
-  constructor(props) {
-    super(props);
-    const { markdown } = props;
-    // 서버사이드 렌더링에서도 마크다운 처리가 되도록 constructor 쪽에서도 구현합니다.
-    this.state = {
-      html: markdown
-        ? marked(props.markdown, { breaks: true, sanitize: true })
-        : ""
-    };
-  }
   componentDidUpdate(prevProps, prevState) {
-    // markdown 값이 변경되면 renderMarkdown을 호출합니다.
     if (prevProps.markdown !== this.props.markdown) {
-      this.renderMarkdown();
+      this._renderMarkdown();
     }
-    console.log(prevProps, prevState);
-    // state가 바뀌면 코드 하이라이팅
+    // console.log(prevProps, prevState);
     if (prevState.html !== this.state.html) {
       Prism.highlightAll();
     }
@@ -67,18 +63,28 @@ class CodeView extends Component<Props, State> {
   render() {
     const { html } = this.state;
     const { type } = this.props;
-
-    // React 에서 html 을 렌더링 하려면 객체를 만들어서 내부에
-    // __html 값을 설정해야합니다.
     const markup = {
       __html: html
     };
 
-    // 그리고, dangerouslySetInnerHTML 값에 해당 객체를 넣어주면 됩니다.
     return (
       <div className={`codeView ${type}`} dangerouslySetInnerHTML={markup} />
     );
   }
 }
+
+const CodeView = () => (
+  <WriteConsumer>
+    {({ state, actions }: any) => {
+      return (
+        <Code
+          markdown={state.contents}
+          setContents={actions.setContents}
+          type="write"
+        />
+      );
+    }}
+  </WriteConsumer>
+);
 
 export default CodeView;

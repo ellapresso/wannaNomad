@@ -32,9 +32,14 @@ const setPost = async (ctx) => {
 const updatePost = async (ctx) => {
     const req = ctx.request.body;
     const postContents = [req.title, req.contents, req.writer, req.upDate, req.pno];
+    // const delInfo = [req.upDate, req.pno, req.delHash];
     const write = await POST.updatePost(postContents);
+    const addHash = await POST.setHash(req.pno, req.addHash);
+    const delHash = await POST.deleteHash(req.upDate, req.pno, req.delHash);
     return ctx.send(200, {
         write,
+        delHash,
+        addHash,
     });
 };
 
@@ -51,7 +56,20 @@ const delPost = async (ctx) => {
     });
 };
 
+// 글 상세
+const getContents = async (ctx) => {
+    const req = ctx.request.body;
+    const pno = req.pno;
+    const id = req.userId;
+    const info = [pno, id];
+    const getContent = await POST.getContents(info);
+    return ctx.send(200, {
+        getContent: getContent[0],
+    });
+};
+
 module.exports.getPost = getPost;
 module.exports.setPost = setPost;
 module.exports.updatePost = updatePost;
 module.exports.delPost = delPost;
+module.exports.getContents = getContents;

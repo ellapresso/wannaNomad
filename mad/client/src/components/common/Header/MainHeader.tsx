@@ -1,44 +1,81 @@
 import Link from "next/link";
+import { AuthConsumer } from "../../../contexts/authContext";
+import { Modal, message } from "antd";
+const confirm = Modal.confirm;
 import "./header.css";
 
-const MenuBtn = () => {
-  return <div className="menuBtn">Menu</div>;
+// confirm
+const showConfirm = (content: string, onOk: any) => {
+  confirm({
+    title: "mad-blog",
+    content: content,
+    onOk() {
+      onOk();
+    }
+  });
 };
 
-const Logo = () => {
+const Login = ({ onModal }) => {
   return (
-    <Link href="/">
-      <div className="logo">MAD;</div>
-    </Link>
-  );
-};
-
-const PostBtn = () => {
-  return (
-    <Link href="/write">
-      <div className="postBtn">Post</div>
-    </Link>
-  );
-};
-
-const Registor = ({ onModal }) => {
-  return (
-    <div className="loginWrap">
-      <div className="login" onClick={onModal}>
-        SNS login
-      </div>
+    <div className="login" onClick={onModal}>
+      login
     </div>
   );
 };
 
-const MainHeader = ({ onModal }) => {
+const Logout = ({ onLogOut }) => {
   return (
-    <header>
-      {/* <MenuBtn /> */}
-      <Logo />
-      <Registor onModal={onModal} />
-      <PostBtn />
-    </header>
+    <div
+      className="login"
+      onClick={() => {
+        showConfirm("로그아웃 하시겠습니까?", onLogOut);
+      }}
+    >
+      logout
+    </div>
+  );
+};
+
+const PostBtn = () => {
+  const alertEvt = () => {
+    message.warning("로그인 후 이용해 주세요");
+  };
+  return (
+    <div className="postBtn" onClick={alertEvt}>
+      Post
+    </div>
+  );
+};
+
+const MainHeader = () => {
+  return (
+    <AuthConsumer>
+      {({ state, actions }: any) => (
+        <header>
+          <div className="LeftBtn">
+            {state.isLogin ? (
+              <Logout onLogOut={actions.onLogOut} />
+            ) : (
+              <Login onModal={actions.onModal} />
+            )}
+          </div>
+          <div className="logo">
+            <Link href="/">
+              <a>MAD;</a>
+            </Link>
+          </div>
+          <div className="postBtn">
+            {state.isLogin ? (
+              <Link href="/write">
+                <a>Post</a>
+              </Link>
+            ) : (
+              <PostBtn />
+            )}
+          </div>
+        </header>
+      )}
+    </AuthConsumer>
   );
 };
 

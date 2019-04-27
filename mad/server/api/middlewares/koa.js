@@ -36,10 +36,26 @@ module.exports = (app) => {
             },
         })
     );
-    // TODO
-    // app.use(
-    //     cors({
-    //         origin: 'https://mad-blog.now.sh/',
-    //     })
-    // );
+
+    // CORS 설정
+    const acceptList = [/mad-blog\.now\.sh/, /localhost/];
+    const checkList = (ctx) => {
+        const reqOrigin = ctx.accept.headers.origin;
+        let blocked = true;
+        acceptList.forEach((e) => {
+            if (e.test(reqOrigin)) {
+                blocked = false;
+            }
+        });
+        if (blocked) {
+            return ctx.throw('not allow');
+        }
+        return reqOrigin;
+    };
+    // cors origin이 없으면 프리패스, 있는데 아무것도 적지않으면 다 블락.
+    app.use(
+        cors({
+            origin: checkList,
+        })
+    );
 };

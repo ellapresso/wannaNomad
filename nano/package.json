@@ -1,6 +1,9 @@
 {
   "name": "nano",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.15.1"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

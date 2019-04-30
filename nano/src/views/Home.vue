@@ -138,7 +138,6 @@
 
 <script>
 import axios from "axios";
-import firebase from "@/firebase";
 import { createNamespacedHelpers } from "vuex";
 const { mapGetters } = createNamespacedHelpers("ui/member");
 
@@ -157,50 +156,12 @@ export default {
                 this.wind = resp.wind.speed;
                 this.clouds = resp.clouds.all;
             });
-
-        this.todayRef.on("value", snapshot => {
-            const todayList = snapshot.val();
-
-            let tempTodays = [];
-            if (todayList) {
-                const keys = Object.keys(todayList);
-                keys.forEach((key, index) => {
-                    const item = todayList[key];
-
-                    console.log(item);
-
-                    const todayItem = {
-                        avatar: item.user_profile,
-                        title: item.today_title,
-                        subtitle: `<span class='text--primary'>${
-                            item.today_content
-                        }</span> by ${item.user_name}`,
-                        user_id: item.user_id,
-                        item_key: key,
-                    };
-
-                    tempTodays.push(todayItem);
-                    if (index < keys.length - 1) {
-                        tempTodays.push({ divider: true, inset: true });
-                    }
-                });
-            }
-
-            this.items = tempTodays;
-        });
     },
     computed: {
         ...mapGetters({
             userInfo: "getUserInfo"
         }),
-        todayRef: {
-          get() {
-            return firebase
-                .database()
-                .ref()
-                .child("today");
-          }
-        }
+        
     },
     data() {
         return {
@@ -228,7 +189,6 @@ export default {
         doSomthing(item) {
             console.log(item.item_key);
             this.sheet = true;
-            this.selectedItem = this.todayRef.child(item.item_key);
         },
         closeDialog() {
             this.dialog = false;
@@ -244,25 +204,9 @@ export default {
                 .then(user => {
                     if (user) {
                         if(this.editMode == 'write') {
-                            const newTodayRef = this.todayRef.push();
-                            newTodayRef.set({
-                                reg_dtm: new Date().getTime(),
-                                replies: {},
-                                today_content: content || "내용없음",
-                                today_title: title || "제목없음",
-                                user_id: user.email,
-                                user_name: user.displayName || "익명",
-                                user_profile:
-                                    "https://d2x5ku95bkycr3.cloudfront.net/App_Themes/Common/images/profile/0_200.png"
-                            });
-                        }else if(this.editMode == 'edit') {
-                            const editItem = this.selectedItem;
-                            editItem.update({
-                                reg_dtm: new Date().getTime(),
-                                today_content: content || "내용없음",
-                                today_title: title || "제목없음",
-                            });
 
+                        }else if(this.editMode == 'edit') {
+                            
                             this.editMode = 'write';
                         }
                         
@@ -296,17 +240,6 @@ export default {
             this.sheet = false
         },
         getCurrentUser() {
-            let userLoaded = false;
-            return new Promise((resolve, reject) => {
-                if (userLoaded) {
-                    resolve(firebase.auth().currentUser);
-                }
-                const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-                    userLoaded = true;
-                    unsubscribe();
-                    resolve(user);
-                }, reject);
-            });
         }
     }
 };

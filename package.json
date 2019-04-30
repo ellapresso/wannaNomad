@@ -10,7 +10,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "start" : "node app.js",
+    "start" : "node server.js",
     "postinstall": "npm install express"
   },
   "dependencies": {

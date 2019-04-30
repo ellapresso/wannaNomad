@@ -12,7 +12,6 @@
     "@mdi/font": "^3.6.95",
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
-    "firebase": "^5.9.3",
     "vue": "^2.6.6",
     "vue-cookies": "^1.5.13",
     "vue-loading-overlay": "^3.2.0",

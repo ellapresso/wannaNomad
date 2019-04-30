@@ -109,7 +109,6 @@ export default {
                 emailErrors : this.emailErrors,
                 passwordErrors : this.passwordErrors
             };
-            this.firebaseEmailLogin(loginObj);
         },
         clear() {
             this.$v.$reset();

@@ -18,7 +18,7 @@ const showConfirm = (content: string, onOk: any) => {
 // 뒤로가기
 const BackBtn = () => {
   const historyBack = () => {
-    Router.push("/");
+    Router.replace("/");
   };
   return (
     <div
@@ -54,17 +54,32 @@ const TitleInput = ({ value, setTitle }) => {
 
 // 글 등록
 const PostBtn = ({ onSubmitPost }) => {
-  const postOk = () => {
-    onSubmitPost();
-  };
   return (
     <div
       className="postBtn"
       onClick={() => {
-        showConfirm("글을 등록하시겠습니까?", postOk);
+        showConfirm("글을 등록하시겠습니까?", () => {
+          onSubmitPost();
+        });
       }}
     >
       Post
+    </div>
+  );
+};
+
+// 글 수정
+const EditBtn = ({ onEdit }) => {
+  return (
+    <div
+      className="postBtn"
+      onClick={() => {
+        showConfirm("글을 수정하시겠습니까?", () => {
+          onEdit();
+        });
+      }}
+    >
+      Edit
     </div>
   );
 };
@@ -76,7 +91,11 @@ const PostHeader = () => {
         <header className="postHeader">
           <BackBtn />
           <TitleInput value={state.title} setTitle={actions.setTitle} />
-          <PostBtn onSubmitPost={actions.onSubmitPost} />
+          {state.isEdit ? (
+            <EditBtn onEdit={actions.onEdit} />
+          ) : (
+            <PostBtn onSubmitPost={actions.onSubmitPost} />
+          )}
         </header>
       )}
     </WriteConsumer>

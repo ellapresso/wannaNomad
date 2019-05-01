@@ -1,51 +1,60 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { AuthConsumer } from "../../contexts/authContext";
 import Search from "../../components/common/Search";
 import Post from "../../components/post";
-
-import axios from "axios";
+import { message } from "antd";
 
 interface State {
   imgUrl: string;
-  postDatas: Array<object>;
+  hashLank: Array<string>;
 }
 
 class PostContainer extends Component<{}, State> {
   state: State = {
     imgUrl: "bg01",
-    postDatas: []
+    hashLank: []
   };
 
-  componentWillMount() {
-    this._getPostDatas();
+  componentDidMount() {
+    this.getHashLank();
   }
 
-  _getPostDatas = async () => {
-    const postDatas = await this._callPostDatasApi();
-    if (!postDatas) return false;
+  //post 데이터 가져오기
+  getHashLank = async () => {
+    const hashLank = await this.callHashLankApi();
+    if (!hashLank) return false;
     this.setState({
-      postDatas
+      hashLank: hashLank.split(",")
     });
   };
 
-  _callPostDatasApi = () => {
+  //API 호출
+  callHashLankApi = () => {
     return axios
-      .get("https://mad-server.herokuapp.com/api/post/list")
-      .then(res => res.data)
+      .get("https://mad-server.herokuapp.com/api/hash/rank")
+      .then(res => {
+        return res.data.rankHash[0].rankHash;
+      })
       .catch(err => console.log(err));
   };
 
-  _onChange = e => {
-    // console.log(e);
+  onSearch = () => {
+    message.destroy();
+    message.loading("검색 기능은준비중입니다 빠빰!!!!!!!!");
   };
 
   render() {
     const style = { backgroundImage: `url(/static/images/bg06.jpg)` };
-    const { postDatas } = this.state;
     return (
-      <div className="contentsWrap postWrap" style={style}>
-        <Search onChange={this._onChange} />
-        <Post postDatas={postDatas} />
-      </div>
+      <AuthConsumer>
+        {({ state }: any) => (
+          <div className="contentsWrap postWrap" style={style}>
+            <Search onSearch={this.onSearch} tagDatas={this.state.hashLank} />
+            <Post postDatas={state.postDatas} />
+          </div>
+        )}
+      </AuthConsumer>
     );
   }
 }

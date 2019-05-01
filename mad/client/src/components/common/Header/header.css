@@ -13,7 +13,7 @@ header {
 header > div {
   cursor: pointer;
 }
-header .menuBtn {
+header .LeftBtn {
   position: absolute;
   top: 0;
   left: 0;
@@ -61,7 +61,7 @@ header .postBtn {
   position: absolute;
   top: 0;
   right: 0;
-  width: 200px;
+  width: 250px;
   height: 100%;
   font-family: "Rajdhani", sans-serif;
   font-size: 20px;
@@ -72,6 +72,11 @@ header .postBtn {
   color: #fff;
   background: #000;
 }
+header .postBtn a {
+  display: inline-block;
+  width: 100%;
+  left: 100%;
+}
 
 .postHeader .backBtn {
   float: left;
@@ -79,7 +84,7 @@ header .postBtn {
 }
 .postHeader input {
   float: left;
-  width: 500px;
+  width: 60%;
   margin: 16px 0;
   border: none;
   font-size: 30px;

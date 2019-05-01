@@ -10,7 +10,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>My page title</title>
+          <link rel="icon" type="image/png" href="/static/images/mad.png" />
+          <title>MAD_BLOG</title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"

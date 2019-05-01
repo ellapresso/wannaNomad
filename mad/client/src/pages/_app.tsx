@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "next/app";
+import { KAKAO_API_KEY } from "../key/API_KEY";
 // css
 import "antd/dist/antd.css";
 import "../static/style/common.css";
@@ -18,6 +19,10 @@ export default class MyApp extends Component<Props> {
     }
 
     return { pageProps };
+  }
+  componentDidMount() {
+    // window.Kakao.init(KAKAO_API_KEY);
+    // console.log(window.Kakao);
   }
 
   render() {

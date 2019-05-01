@@ -38,7 +38,8 @@ module.exports = (app) => {
     );
 
     // CORS 설정
-    const acceptList = [/mad-blog\.now\.sh/, /localhost/];
+    // const acceptList = [/mad-blog\.now\.sh/, /localhost/];
+    const acceptList = [/mad-blog\.now\.sh/];
     const checkList = (ctx) => {
         const reqOrigin = ctx.accept.headers.origin;
         let blocked = true;
@@ -56,6 +57,7 @@ module.exports = (app) => {
     app.use(
         cors({
             origin: checkList,
+            maxAge: 3600,
         })
     );
 };

@@ -1,0 +1,32 @@
+.tagWrap {
+  float: left;
+  margin: 10px 0;
+  max-width: 90%;
+  min-height: 64px;
+}
+
+.topTagWrap {
+  float: left;
+  margin: 10px 0;
+}
+
+/* antd custom */
+.tagWrap .ant-tag,
+.topTagWrap .ant-tag {
+  margin-bottom: 10px;
+  cursor: default;
+}
+
+.tagEditor {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 7px 16px;
+  background: #fff;
+  z-index: 1000000;
+}
+
+.ant-tag-hidden {
+  display: inline !important;
+}

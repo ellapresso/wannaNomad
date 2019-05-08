@@ -1,0 +1,86 @@
+.posthWrap {
+  position: relative;
+  overflow: hidden;
+  width: 75%;
+  margin: 0 auto !important;
+  z-index: 100;
+}
+.posthWrap .postList {
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+}
+.posthWrap .postList .postListHeader {
+  padding: 0 16px;
+  border-bottom: 1px solid #ddd;
+}
+.posthWrap .postList .postListHeader .postListTitle {
+  padding-top: 16px;
+  font-size: 20px;
+}
+.posthWrap .postList .postListHeader .postListTitle .postMenuBtn {
+  position: relative;
+  float: right;
+  cursor: pointer;
+}
+.posthWrap .postList .postListHeader .postListTitle .postMenuBtn .postMenu {
+  display: none;
+  position: absolute;
+  bottom: -70px;
+  left: -30px;
+  width: 50px;
+  background: #000;
+  border-radius: 5px;
+}
+.posthWrap
+  .postList
+  .postListHeader
+  .postListTitle
+  .postMenuBtn:hover
+  .postMenu {
+  display: block;
+}
+.posthWrap
+  .postList
+  .postListHeader
+  .postListTitle
+  .postMenuBtn
+  .postMenu
+  span {
+  display: block;
+  margin: 10px;
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+}
+.posthWrap
+  .postList
+  .postListHeader
+  .postListTitle
+  .postMenuBtn
+  .postMenu
+  span:hover {
+  text-decoration: underline #fff;
+}
+.posthWrap .postList .postListHeader .postInfo {
+  overflow: hidden;
+  padding: 5px 0px 16px;
+  line-height: 32px;
+}
+.posthWrap .postList .postListHeader .postInfo span {
+  display: inline-block;
+  line-height: 30px;
+}
+.posthWrap .postList .postListHeader .postDate {
+  float: right;
+}
+.posthWrap .postList .postListBody {
+  overflow: auto;
+  height: 350px;
+  padding: 16px;
+}
+.posthWrap .postList .postListfooter {
+  overflow: hidden;
+  padding: 8px 16px;
+  border-top: 1px solid #ddd;
+}

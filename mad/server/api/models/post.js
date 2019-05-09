@@ -5,7 +5,7 @@ const DB = require('../../config/database');
 
 const madDatabase = DB.madDb;
 const Post = {
-    getPost: (userId) => {
+    getPost: (userId, page, word) => {
         let sql =
             'select `posts`.`pno`,`users`.`nickname` as `writer`,`title`,`contents`,`hashes`, if(`likes`,`likes`,0) as likes ,`wrDate`,`upDate`,`users`.`thumbnail_image` as `thumbnail_image`';
         if (userId) {
@@ -19,13 +19,45 @@ const Post = {
         }
         sql += ' left join `users` on `users`.`id` = `posts`.`writer`';
         sql += ' where `posts`.`isDel`= 0';
-        // 최종 쿼리
-        sql = 'select * from (' + sql + ') a group by `pno` order by `pno` desc';
+
+        // 최종 쿼리 + 검색쿼리
+        sql = 'select * from (' + sql + ') a';
+        if (word) {
+            sql += ' where writer like "%' + word + '%" or hashes like "%' + word + '%" or title like "%' + word + '%"';
+        }
+        sql += ' group by `pno` order by `pno` desc';
+
+        // 페이징
+        if (page) {
+            sql += ` limit ${page}`;
+        } else {
+            sql += ' limit 4';
+        }
         return madDatabase
             .promise()
             .query(sql)
             .then(([rows]) => {
                 return rows;
+            });
+    },
+    getTotal: (word) => {
+        let sql = 'select * from';
+        sql += ' (select `posts`.`pno`, `users`.`nickname` as `writer`, `title`, `contents`, `hashes`, if (`likes`, `likes`, 0) as likes, `wrDate`, `upDate`, `users`.`thumbnail_image` as `thumbnail_image`';
+        sql += ' from `posts`';
+        sql += ' left join';
+        sql += ' (select `pno`, GROUP_CONCAT(`hContent` SEPARATOR ",") as `hashes` from `hashes` where `isDel` = 0 group by `pno` ) `hash` on `posts`.`pno` = `hash`.`pno`';
+        sql += ' left join ( select pno, count(lno) as likes from likes group by pno ) likes on `posts`.`pno` = `likes`.`pno`';
+        sql += ' left join `users` on `users`.`id` = `posts`.`writer` where `posts`.`isDel` = 0) a';
+        if (word) {
+            sql += ' where `writer` like "%' + word + '%" or `hashes` like "%' + word + '%" or `title` like "%' + word + '%"';
+        }
+        sql += ' group by `pno` order by `pno` desc ';
+        sql = 'select count(*) as `totalCnt` from(' + sql + ') b';
+        return madDatabase
+            .promise()
+            .query(sql)
+            .then(([rows]) => {
+                return rows[0];
             });
     },
     setPost: (contents) => {
@@ -35,23 +67,6 @@ const Post = {
             .then(([rows]) => {
                 return rows;
             });
-    },
-    setHash: (id, hashes) => {
-        if (hashes) {
-            const hashArr = hashes.split(',');
-            let sql = 'insert into hashes (pno,hContent) values';
-            hashArr.forEach((i) => {
-                sql += `(${id},'${i}'),`;
-            });
-            sql = sql.substring(0, sql.length - 1);
-            return madDatabase
-                .promise()
-                .query(sql)
-                .then(([rows]) => {
-                    return rows;
-                });
-        }
-        return null;
     },
     updatePost: (contents) => {
         return madDatabase
@@ -69,22 +84,6 @@ const Post = {
                 return rows;
             });
     },
-    deleteHash: (date, pno, hashes) => {
-        if (hashes) {
-            const hashArr = hashes.split(',');
-            let sql = 'UPDATE `hashes` SET `isDel` = 1, `upDate`=? where `pno`=? and (';
-            hashArr.forEach((i) => {
-                sql += ` hContent = '${i}' or`;
-            });
-            sql = sql.substring(0, sql.length - 3) + ')';
-            return madDatabase
-                .promise()
-                .query(sql, [date, pno])
-                .then((rows) => {
-                    return rows;
-                });
-        }
-    },
     getContents: (info) => {
         let sql = 'select `posts`.`pno`, `title`, `nickname`, `contents`, `thumbnail_image`, `reg_date`, `update_day`, hashes';
         sql += ' from `posts` left join `users` on `posts`.`writer` = `users`.`id`';
@@ -93,14 +92,6 @@ const Post = {
         return madDatabase
             .promise()
             .query(sql, info)
-            .then((rows) => {
-                return rows;
-            });
-    },
-    rankHash: () => {
-        return madDatabase
-            .promise()
-            .query('select GROUP_CONCAT(`ranks`.hContent SEPARATOR ",") as rankHash from (select count(hno) cnt, hContent from hashes h left join posts p on h.pno = p.pno where p.isDel = 0 and h.isDel = 0 group by hContent order by cnt desc limit 7) as ranks ')
             .then((rows) => {
                 return rows;
             });

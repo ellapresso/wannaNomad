@@ -145,7 +145,7 @@ export default {
                     });
                 */
                 axios
-                    .post(`http://localhost:8081/api/member`, {
+                    .post(`/api/member`, {
                         headers: {
                             "Content-type": "application/x-www-form-urlencoded"
                         },

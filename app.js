@@ -20,7 +20,7 @@ app.route('/*').get(function(request, response) {
 /* API SERVER */
 api = express();
 api.use(serveStatic(path.join(__dirname, 'dist')));
-const apiPort = process.env.PORT || 8081;
+const apiPort = process.env.PORT || 5001;
 api.listen(apiPort);
 
 

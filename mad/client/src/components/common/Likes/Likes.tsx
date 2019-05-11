@@ -1,4 +1,4 @@
-import { AuthConsumer } from "../../../contexts/authContext";
+import { PostConsumer } from "../../../contexts/postContext";
 import { Statistic, Icon, message } from "antd";
 import "./likes.css";
 
@@ -13,7 +13,7 @@ const Likes = ({ likeDatas, love, pno }) => {
   };
 
   return (
-    <AuthConsumer>
+    <PostConsumer>
       {({ actions }: any) => (
         <div
           className="likeWrap"
@@ -28,7 +28,7 @@ const Likes = ({ likeDatas, love, pno }) => {
           />
         </div>
       )}
-    </AuthConsumer>
+    </PostConsumer>
   );
 };
 

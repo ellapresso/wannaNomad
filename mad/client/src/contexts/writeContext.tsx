@@ -1,10 +1,36 @@
+/**
+ * 게시글 작성 및 수정 관련 context
+ */
 import React, { Component, createContext } from "react";
 import Router from "next/router";
 import moment from "moment";
 import axios from "axios";
 
-const Context = createContext({}); // Context 를 만듭니다.
+//Context 생성
+const Context = createContext({});
 const { Provider, Consumer: WriteConsumer } = Context;
+
+/**
+ * mode: 현재 write Component의 모드 (edit:수정)
+ * setLoading : 로딩 처리 이벤트
+ * pno: post id (수정)
+ * isEdit: 수정 모드 여부 (수정)
+ * title: post 제목 (등록/수정)
+ * contents: post 내용 (등록/수정)
+ * hash: post 해시태그 (등록/수정)
+ * beforeHash: 수정전 해시 태그 (수정)
+ * setTitle: post 제목 설정 이벤트 (등록)
+ * setContents: post 내용 설정 이벤트 (등록)
+ * setHash: post 해시태그 설정 이벤트 (등록)
+ * onSubmitPost: post 등록 이벤트 (등록)
+ * onEdit: post 수정 이벤트 (수정)
+ */
+
+interface Props {
+  mode: string;
+  pno: string;
+  setLoading: any;
+}
 
 interface State {
   pno: string;
@@ -14,10 +40,6 @@ interface State {
   hash: Array<string>;
   beforeHash: Array<string>;
 }
-interface Props {
-  mode: string;
-  pno: string;
-}
 
 class WriteProvider extends Component<Props, State> {
   state: State = {
@@ -25,20 +47,22 @@ class WriteProvider extends Component<Props, State> {
     isEdit: false,
     title: "",
     contents: "",
-    hash: [], // 변경될 해시
-    beforeHash: [] // 기존 해시
+    hash: [],
+    beforeHash: []
   };
 
   componentDidMount() {
+    // 로그인 없이 접근시 메인 화면으로 이동
     if (!localStorage.getItem("loginId")) {
       Router.replace("/");
       return false;
     }
-    if (this.props.mode == "edit") {
-      this.getPostData(this.props.pno);
-      this.setState({
-        pno: this.props.pno
-      });
+
+    // 수정 모드 일 경우 해당 게시글 데이터 조회
+    const { mode, pno } = this.props;
+    if (mode == "edit") {
+      this.getPostData(pno);
+      this.setState({ pno });
     }
   }
 
@@ -53,77 +77,76 @@ class WriteProvider extends Component<Props, State> {
       this.setState({ hash });
     },
     onSubmitPost: () => {
-      if (this.state.title === "" || this.state.contents === "") {
+      const { title, contents, hash } = this.state;
+      if (title === "" || contents === "") {
         alert("title 혹은 contents를 작성해주세요");
         return false;
       }
 
-      const hash = this.state.hash.toString();
+      const hashStr = hash.toString();
 
       //post 등록
       axios
         .post("https://mad-server.herokuapp.com/api/post", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          title: this.state.title,
-          contents: this.state.contents,
+          title: title,
+          contents: contents,
           wrDate: moment().format("YYYY-MM-DD H:mm:ss"),
           writer: localStorage.getItem("loginId"),
-          hash: hash
+          hash: hashStr
         })
         .then(res => {
-          // console.log("@onSubmitPost", res);
+          // 등록 완료시 메인화면으로 이동
           Router.replace("/");
         });
     },
     onEdit: () => {
-      // console.log("@onEdit");
-      let delHash = this.state.beforeHash.filter(
-        tag => !this.state.hash.includes(tag)
-      );
-
-      let addHash = this.state.hash.filter(
-        tag => !this.state.beforeHash.includes(tag)
-      );
-
-      console.log(delHash, addHash);
+      const { beforeHash, hash, pno, title, contents } = this.state;
+      let delHash = beforeHash.filter(tag => !hash.includes(tag));
+      let addHash = hash.filter(tag => !beforeHash.includes(tag));
 
       axios
         .post("https://mad-server.herokuapp.com/api/post/edit", {
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          pno: this.state.pno,
-          title: this.state.title,
-          contents: this.state.contents,
+          pno,
+          title,
+          contents,
           upDate: moment().format("YYYY-MM-DD H:mm:ss"),
           writer: localStorage.getItem("loginId"),
           delHash: delHash.toString(),
           addHash: addHash.toString()
         })
         .then(res => {
-          // console.log("@onEdit", res);
+          // 수정 완료시 메인화면으로 이동
           Router.replace("/");
         });
     }
   };
 
+  /**
+   * [수정] 해당 post 데이터 조회
+   * @param {string} pno 게시글 id
+   */
   getPostData = pno => {
-    console.log("@getPostData");
+    this.props.setLoading();
     axios
       .post("https://mad-server.herokuapp.com/api/post/contents", {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         pno,
         userId: localStorage.getItem("loginId")
       })
-      .then(res => {
-        const hashArr = res.data.getContent[0].hashes
-          ? res.data.getContent[0].hashes.split(",")
+      .then(({ data }) => {
+        const hashArr = data.getContent[0].hashes
+          ? data.getContent[0].hashes.split(",")
           : [];
         this.setState({
           isEdit: true,
-          title: res.data.getContent[0].title,
-          contents: res.data.getContent[0].contents,
+          title: data.getContent[0].title,
+          contents: data.getContent[0].contents,
           hash: hashArr,
           beforeHash: hashArr
         });
+        this.props.setLoading();
       });
   };
 
@@ -134,5 +157,4 @@ class WriteProvider extends Component<Props, State> {
   }
 }
 
-// 내보내줍니다.
 export { WriteProvider, WriteConsumer };

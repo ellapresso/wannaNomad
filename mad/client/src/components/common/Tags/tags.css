@@ -14,7 +14,7 @@
 .tagWrap .ant-tag,
 .topTagWrap .ant-tag {
   margin-bottom: 10px;
-  cursor: default;
+  cursor: pointer;
 }
 
 .tagEditor {

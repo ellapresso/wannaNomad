@@ -52,6 +52,7 @@ const MainHeader = () => {
     <AuthConsumer>
       {({ state, actions }: any) => (
         <header>
+          <div className="LeftBtn">MENU</div>
           <div className="LeftBtn">
             {state.isLogin ? (
               <Logout onLogOut={actions.onLogOut} />

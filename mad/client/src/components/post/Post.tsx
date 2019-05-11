@@ -1,4 +1,4 @@
-import { AuthConsumer } from "../../contexts/authContext";
+import { PostConsumer } from "../../contexts/postContext";
 import Router from "next/router";
 import { Col, Row, Avatar, Icon } from "antd";
 import moment from "moment";
@@ -22,7 +22,7 @@ const PostMenu = ({ pno }) => {
         >
           수정
         </span>
-        <AuthConsumer>
+        <PostConsumer>
           {({ actions }: any) => (
             <span
               onClick={() => {
@@ -32,7 +32,7 @@ const PostMenu = ({ pno }) => {
               삭제
             </span>
           )}
-        </AuthConsumer>
+        </PostConsumer>
       </div>
     </div>
   );

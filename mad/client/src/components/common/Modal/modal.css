@@ -38,11 +38,6 @@
   text-align: center;
   line-height: 49px;
   border-radius: 5px;
-}
-.modalWrap .modal .google-login-btn {
-  background: #4285f4;
-  color: #fff;
-}
-.modalWrap .modal .github-login-btn {
-  background: #e9ecef;
+  background: yellow;
+  cursor: pointer;
 }

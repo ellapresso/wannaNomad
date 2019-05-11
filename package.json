@@ -10,7 +10,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "start": "node app.js",
+    "start": "supervisor app.js",
     "postinstall": "npm install express"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "core-js": "^2.6.5",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "oracledb": "^3.1.2",
     "serve-static": "^1.13.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",

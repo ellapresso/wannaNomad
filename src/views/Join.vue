@@ -35,7 +35,6 @@
             <v-flex id="login-btn-container">
                 <v-btn block color="primary" dark @click="submit">제출하기</v-btn>
                 <v-btn block color="primary" dark @click="clear">다시입력</v-btn>
-                
             </v-flex>
         </form>
     </v-flex>
@@ -49,6 +48,8 @@ import {
     maxLength,
     email
 } from "vuelidate/lib/validators";
+
+import axios from "axios";
 
 export default {
     name: "join",
@@ -73,7 +74,7 @@ export default {
     data: () => ({
         email: "",
         password: "",
-        passwordConfirm: "",
+        passwordConfirm: ""
     }),
     created() {},
     mounted() {},
@@ -101,11 +102,17 @@ export default {
         passwordConfirmErrors() {
             const errors = [];
             if (!this.$v.passwordConfirm.$dirty) return errors;
-            if (!this.$v.passwordConfirm.minLength || !this.$v.passwordConfirm.maxLength) {
+            if (
+                !this.$v.passwordConfirm.minLength ||
+                !this.$v.passwordConfirm.maxLength
+            ) {
                 errors.push("비밀번호 확인은 8~20자리 입니다.");
             }
 
-            if(!this.$v.passwordConfirm.required || (this.passwordConfirm !== this.password)){
+            if (
+                !this.$v.passwordConfirm.required ||
+                this.passwordConfirm !== this.password
+            ) {
                 errors.push("비밀번호를 확인해주세요.");
             }
             return errors;
@@ -116,7 +123,12 @@ export default {
         submit() {
             this.$v.$touch();
 
-            if(!this.emailErrors.length && !this.passwordErrors.length && !this.passwordConfirmErrors.length){
+            if (
+                !this.emailErrors.length &&
+                !this.passwordErrors.length &&
+                !this.passwordConfirmErrors.length
+            ) {
+                /*
                 this.$store.state.firebase
                     .auth()
                     .createUserWithEmailAndPassword(this.email, this.password)
@@ -131,6 +143,24 @@ export default {
                         console.log(error);
                         alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
                     });
+                */
+                axios
+                    .post(`http://localhost:8081/api/member`, {
+                        headers: {
+                            "Content-type": "application/x-www-form-urlencoded"
+                        },
+                        id: "hong",
+                        pwd: "12345"
+                    })
+                    .then(response => {
+                        console.log(
+                            "response",
+                            JSON.stringify(response, null, 2)
+                        );
+                    })
+                    .catch(error => {
+                        console.log("failed", error);
+                    });
             }
         },
         clear() {
@@ -138,7 +168,7 @@ export default {
             this.email = "";
             this.password = "";
             this.passwordConfirm = "";
-        },
+        }
     }
 };
 </script>

@@ -11,6 +11,7 @@ const setLike = async (ctx) => {
     return ctx.send(200, {
         pno,
         userId,
+        setLike,
     });
 };
 
@@ -23,8 +24,18 @@ const delLike = async (ctx) => {
     return ctx.send(200, {
         pno,
         userId,
+        delLike,
+    });
+};
+
+// 좋아요 차트
+const chartLike = async (ctx) => {
+    const chartLike = await LIKE.chartLike();
+    return ctx.send(200, {
+        chartLike,
     });
 };
 
 module.exports.setLike = setLike;
 module.exports.delLike = delLike;
+module.exports.chartLike = chartLike;

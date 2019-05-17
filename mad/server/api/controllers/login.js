@@ -11,7 +11,6 @@ const kakaoLogin = async (ctx) => {
         responseType: 'json',
     }).then(function (response) {
         const id = response.data.id;
-        // const uuid = response.data.for_partner.uuid;
         const nickname = response.data.properties.nickname;
         const profile_image = response.data.properties.profile_image;
         const thumbnail_image = response.data.properties.thumbnail_image;

@@ -71,7 +71,7 @@ const Post = {
     updatePost: (contents) => {
         return madDatabase
             .promise()
-            .query('UPDATE `posts` SET `title`=?, `contents`=?, `writer`=?, `upDate`=? where pno =?', contents)
+            .query('UPDATE `posts` SET `title`=?, `contents`=?, `writer`=?, `upDate`=? where pno =? and isDel = 0', contents)
             .then(([rows]) => {
                 return rows;
             });
@@ -99,6 +99,3 @@ const Post = {
 };
 
 module.exports = Post;
-
-
-// TODO 삭제된 데이터 쿼리에 추가 (isDel= ?)

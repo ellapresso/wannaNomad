@@ -28,6 +28,14 @@ const delLike = async (ctx) => {
     });
 };
 
+// 좋아요 랭크
+const rankLike = async (ctx) => {
+    const rankLike = await LIKE.rankLike();
+    return ctx.send(200, {
+        rankLike,
+    });
+};
+
 // 좋아요 차트
 const chartLike = async (ctx) => {
     const chartLike = await LIKE.chartLike();
@@ -38,4 +46,5 @@ const chartLike = async (ctx) => {
 
 module.exports.setLike = setLike;
 module.exports.delLike = delLike;
+module.exports.rankLike = rankLike;
 module.exports.chartLike = chartLike;

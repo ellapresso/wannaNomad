@@ -22,8 +22,16 @@ const User = {
     ourMember: (id) => {
         return madDatabase
             .promise()
-            .query('UPDATE `users` SET `update_day`= CURRENT_TIMESTAMP where id=?', id)
+            .query('UPDATE `users` SET `update_day`= CURRENT_TIMESTAMP where `id`=?', id)
             .then((rows) => {
+                return rows;
+            });
+    },
+    getUserInfo: (id) => {
+        return madDatabase
+            .promise()
+            .query('select * from `users` where `id`=?', id)
+            .then(([rows]) => {
                 return rows;
             });
     },

@@ -21,6 +21,14 @@ const Like = {
                 return rows;
             });
     },
+    rankLike: () => {
+        return madDatabase
+            .promise()
+            .query('select `pno`,count(`luser`) as `like` from `likes` group by `pno` order by `like` desc;')
+            .then(([rows]) => {
+                return rows;
+            });
+    },
     chartLike: () => {
         return madDatabase
             .promise()

@@ -5,34 +5,42 @@ const DB = require('../../config/database');
 const madDatabase = DB.madDb;
 const Like = {
     setLike: (pno, id) => {
+        let sql = 'INSERT INTO `likes`(`pno`,`luser`) SELECT ?, ? FROM DUAL ';
+        sql += 'WHERE NOT EXISTS (SELECT `pno`, `luser` FROM `likes` WHERE `pno` = ? AND `luser` = ?)';
         return madDatabase
             .promise()
-            // eslint-disable-next-line max-len
-            .query('INSERT INTO `likes`(`pno`,`luser`) SELECT ?, ? FROM DUAL WHERE NOT EXISTS (SELECT `pno`, `luser` FROM `likes` WHERE `pno` = ? and `luser` = ?)', [pno, id, pno, id])
+            .query(sql, [pno, id, pno, id])
             .then(([rows]) => {
                 return rows;
             });
     },
     delLike: (pno, id) => {
+        const sql = 'DELETE FROM `likes` WHERE `pno` = ? AND `luser` = ?';
         return madDatabase
             .promise()
-            .query('DELETE FROM `likes` WHERE `pno` = ? and `luser` = ?', [pno, id])
+            .query(sql, [pno, id])
             .then(([rows]) => {
                 return rows;
             });
     },
     rankLike: () => {
+        const sql = 'SELECT `pno`,count(`luser`) AS `like` FROM `likes` GROUP BY `pno` ORDER BY `like` DESC';
         return madDatabase
             .promise()
-            .query('select `pno`,count(`luser`) as `like` from `likes` group by `pno` order by `like` desc;')
+            .query(sql)
             .then(([rows]) => {
                 return rows;
             });
     },
     chartLike: () => {
+        let sql = 'select b.`pno`,`title`,`nickname`,`thumbnail_image` as `thumbnail`, `wrDate`, if(`likeCnt` is null, 0 ,`likeCnt`) `likeCnt` from ';
+        sql += '(select p.`pno`, p.`title`, u.`nickname`, u.`thumbnail_image`, p.`wrDate` ';
+        sql += 'from `posts` p left join `users` u on p.`writer` = u.`id` where p.`isDel`=0) b ';
+        sql += 'left join ';
+        sql += '(SELECT `pno`,count(`luser`) `likeCnt` FROM `likes` GROUP BY `pno`) a on a.`pno` = b.`pno` ORDER BY `likeCnt` DESC LIMIT 10 ';
         return madDatabase
             .promise()
-            .query('select `pno`,count(`luser`) `likeCnt` from `likes` group by `pno` order by count(`luser`) desc;')
+            .query(sql)
             .then(([rows]) => {
                 return rows;
             });

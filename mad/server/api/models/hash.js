@@ -7,7 +7,7 @@ const Hash = {
     setHash: (id, hashes) => {
         if (hashes) {
             const hashArr = hashes.split(',');
-            let sql = 'insert into hashes (pno,hContent) values';
+            let sql = 'INSERT INTO `hashes` (pno,hContent) VALUES';
             hashArr.forEach((i) => {
                 sql += `(${id},'${i}'),`;
             });
@@ -24,9 +24,9 @@ const Hash = {
     deleteHash: (date, pno, hashes) => {
         if (hashes) {
             const hashArr = hashes.split(',');
-            let sql = 'UPDATE `hashes` SET `isDel` = 1, `upDate`=? where `pno`=? and (';
+            let sql = 'UPDATE `hashes` SET `isDel` = 1, `upDate`=? WHERE `pno`=? AND (';
             hashArr.forEach((i) => {
-                sql += ` hContent = '${i}' or`;
+                sql += ` hContent = '${i}' OR`;
             });
             sql = sql.substring(0, sql.length - 3) + ')';
             return madDatabase
@@ -38,18 +38,21 @@ const Hash = {
         }
     },
     rankHash: () => {
+        let sql = 'SELECT GROUP_CONCAT(`ranks`.`hContent` SEPARATOR ",") AS `rankHash` FROM ';
+        sql += '(SELECT count(`hno`) cnt, `hContent` FROM `hashes` h left join `posts` p ON h.`pno` = p.`pno` ';
+        sql += 'WHERE p.`isDel` = 0 AND h.`isDel` = 0 GROUP BY `hContent` ORDER BY `cnt` DESC LIMIT 7) AS `ranks` ';
         return madDatabase
             .promise()
-            // eslint-disable-next-line max-len
-            .query('select GROUP_CONCAT(`ranks`.`hContent` SEPARATOR ",") as `rankHash` from (select count(`hno`) cnt, `hContent` from `hashes` h left join `posts` p on h.`pno` = p.`pno` where p.`isDel` = 0 and h.`isDel` = 0 group by `hContent` order by `cnt` desc limit 7) as `ranks` ')
+            .query(sql)
             .then(([rows]) => {
                 return rows;
             });
     },
     chartHash: () => {
+        const sql = 'SELECT `hContent` AS `hashTag`,count(`pno`) AS `cnt` FROM `hashes` WHERE `isDel` = 0 GROUP BY `hContent` ORDER BY count(`pno`) DESC';
         return madDatabase
             .promise()
-            .query(' select `hContent` as `hashTag`,count(`pno`) as `cnt` from `hashes` where `isDel` = 0 group by `hContent` order by count(`pno`) desc')
+            .query(sql)
             .then(([rows]) => {
                 return rows;
             });

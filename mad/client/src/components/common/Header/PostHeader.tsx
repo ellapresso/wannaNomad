@@ -1,11 +1,10 @@
 import Router from "next/router";
-import { WriteConsumer } from "../../../contexts/writeContext";
 import { Modal, Icon } from "antd";
 const confirm = Modal.confirm;
 import "./header.css";
 
 // confirm
-const showConfirm = (content: string, onOk: any) => {
+const showConfirm = (content: string, onOk: () => void) => {
   confirm({
     title: "mad-blog",
     content: content,
@@ -84,21 +83,17 @@ const EditBtn = ({ onEdit }) => {
   );
 };
 
-const PostHeader = () => {
+const PostHeader = ({ state, actions }) => {
   return (
-    <WriteConsumer>
-      {({ state, actions }: any) => (
-        <header className="postHeader">
-          <BackBtn />
-          <TitleInput value={state.title} setTitle={actions.setTitle} />
-          {state.isEdit ? (
-            <EditBtn onEdit={actions.onEdit} />
-          ) : (
-            <PostBtn onSubmitPost={actions.onSubmitPost} />
-          )}
-        </header>
+    <header className="postHeader">
+      <BackBtn />
+      <TitleInput value={state.title} setTitle={actions.setTitle} />
+      {state.isEdit ? (
+        <EditBtn onEdit={actions.onEdit} />
+      ) : (
+        <PostBtn onSubmitPost={actions.onSubmitPost} />
       )}
-    </WriteConsumer>
+    </header>
   );
 };
 

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { AuthConsumer } from "../../../contexts/authContext";
+
 import { Modal, message } from "antd";
 const confirm = Modal.confirm;
 import "./header.css";
 
 // confirm
-const showConfirm = (content: string, onOk: any) => {
+const showConfirm = (content: string, onOk: () => void) => {
   confirm({
     title: "mad-blog",
     content: content,
@@ -15,7 +15,15 @@ const showConfirm = (content: string, onOk: any) => {
   });
 };
 
-const Login = ({ onModal }) => {
+const MenuBtn = ({ onMenu }) => {
+  return (
+    <div className="LeftBtn" onClick={onMenu}>
+      MENU
+    </div>
+  );
+};
+
+const Login = ({ onModal }: any) => {
   return (
     <div className="login" onClick={onModal}>
       login
@@ -23,7 +31,7 @@ const Login = ({ onModal }) => {
   );
 };
 
-const Logout = ({ onLogOut }) => {
+const Logout = ({ onLogOut }: any) => {
   return (
     <div
       className="login"
@@ -47,36 +55,32 @@ const PostBtn = () => {
   );
 };
 
-const MainHeader = () => {
+const MainHeader = ({ state, actions }) => {
   return (
-    <AuthConsumer>
-      {({ state, actions }: any) => (
-        <header>
-          <div className="LeftBtn">MENU</div>
-          <div className="LeftBtn">
-            {state.isLogin ? (
-              <Logout onLogOut={actions.onLogOut} />
-            ) : (
-              <Login onModal={actions.onModal} />
-            )}
-          </div>
-          <div className="logo">
-            <Link href="/">
-              <a>MAD;</a>
-            </Link>
-          </div>
-          <div className="postBtn">
-            {state.isLogin ? (
-              <Link href="/write">
-                <a>Post</a>
-              </Link>
-            ) : (
-              <PostBtn />
-            )}
-          </div>
-        </header>
-      )}
-    </AuthConsumer>
+    <header>
+      <MenuBtn onMenu={actions.onMenu} />
+      <div className="LeftBtn">
+        {state.isLogin ? (
+          <Logout onLogOut={actions.onLogOut} />
+        ) : (
+          <Login onModal={actions.onModal} />
+        )}
+      </div>
+      <div className="logo">
+        <Link href="/">
+          <span>MAD;</span>
+        </Link>
+      </div>
+      <div className="postBtn">
+        {state.isLogin ? (
+          <Link href="/write">
+            <span>Post</span>
+          </Link>
+        ) : (
+          <PostBtn />
+        )}
+      </div>
+    </header>
   );
 };
 

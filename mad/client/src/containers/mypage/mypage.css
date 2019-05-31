@@ -1,0 +1,90 @@
+.postWrap.myPage {
+  position: absolute;
+  width: 100%;
+  margin-top: 80px !important;
+}
+.mypage_wrap {
+  margin: 50px auto;
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  width: 75%;
+  z-index: 100;
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 66px 50px;
+  box-sizing: border-box;
+}
+.mypage_wrap .ant-list-item-meta {
+  width: 100%;
+}
+.mypage_wrap .ant-list-item-meta-content {
+  overflow: hidden;
+}
+.mypage_wrap .ant-list-item-meta-description {
+  width: 100%;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.mypage_wrap .ant-list-item-meta {
+  cursor: pointer;
+}
+/* Header */
+.mypage_content_header {
+  position: relative;
+  width: 100%;
+  min-height: 100px;
+  box-sizing: border-box;
+  padding-left: 120px;
+}
+.mypage_content_header .mypage_profile {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #79e5cb;
+  border: 1px solid #fefefe;
+}
+.mypage_profile img {
+  width: 100%;
+}
+.mypage_title h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 38px;
+}
+.user_status span {
+  font-size: 12px;
+  color: #545454;
+}
+.user_total_post span {
+  font-size: 12px;
+  color: #545454;
+}
+/* Body */
+.mypage_content_body {
+  margin-top: 32px;
+}
+.mypage_content_tab {
+  margin: 20px 0 0;
+}
+.mypage_content_tab .mypage_btn {
+  height: 36px;
+  line-height: 36px;
+  padding: 0px 16px;
+  color: #ddd;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+}
+.mypage_content_tab .mypage_btn.on {
+  background-color: #ddd;
+  font-weight: 600;
+  color: #aaa;
+}

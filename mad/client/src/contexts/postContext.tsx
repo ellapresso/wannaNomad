@@ -1,7 +1,7 @@
 /**
  * 게시글 관련 context
  */
-import React, { Component, createContext } from "react";
+import React, { PureComponent, createContext } from "react";
 import moment from "moment";
 import axios from "axios";
 
@@ -23,27 +23,36 @@ const { Provider, Consumer: PostConsumer } = Context;
  */
 
 interface Props {
-  postDatas: Array<object>;
+  isLogin: boolean;
   setLoading: any;
+  keyword: string;
 }
 
 interface State {
-  postDatas: Array<object>;
+  postDatas: object[];
+  isLogin: Boolean;
   postCnt: number;
   isMoreBtn: Boolean;
   keyword: string;
 }
-
-class PostProvider extends Component<Props, State> {
+interface SearchVal {
+  value?: string;
+  dataset?: {
+    keyword: string;
+  };
+  innerHTML?: string;
+}
+class PostProvider extends PureComponent<Props, State> {
   state: State = {
     postDatas: [],
+    isLogin: false,
     postCnt: 4,
     isMoreBtn: false,
     keyword: ""
   };
 
   actions = {
-    onDelete: pno => {
+    onDelete: (pno: number) => {
       this.props.setLoading();
       axios
         .post("https://mad-server.herokuapp.com/api/post/del", {
@@ -57,7 +66,7 @@ class PostProvider extends Component<Props, State> {
         })
         .catch(err => console.log(err));
     },
-    onLike: pno => {
+    onLike: (pno: number) => {
       this.props.setLoading();
       axios
         .post("https://mad-server.herokuapp.com/api/like", {
@@ -70,7 +79,7 @@ class PostProvider extends Component<Props, State> {
         })
         .catch(err => console.log(err));
     },
-    offLike: pno => {
+    offLike: (pno: number) => {
       this.props.setLoading();
       axios
         .post("https://mad-server.herokuapp.com/api/unlike", {
@@ -94,28 +103,42 @@ class PostProvider extends Component<Props, State> {
         }
       );
     },
-    onSearch: e => {
+    onSearch: (e: Event) => {
       this.props.setLoading();
-      const target = e.target;
-      const keyword = target.value ? target.value : target.dataset.keyword;
+      const target: SearchVal = e.target;
+      const keyword = target.value
+        ? target.value
+        : target.dataset.keyword
+        ? target.dataset.keyword
+        : target.innerHTML;
       this.setState({ keyword }, () => {
         this.getPostDatas();
       });
     }
   };
 
-  //componentWillReceiveProps:컴포넌트가 prop 을 새로 받았을 때 실행
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      postDatas: nextProps.postDatas,
-      isMoreBtn: true
-    });
+  constructor(props) {
+    super(props);
+    this.state = { ...this.state, keyword: this.props.keyword };
   }
 
-  //shouldComponentUpdate:prop 혹은 state 가 변경 되었을 때, 리렌더링을 할지 말지 정하는 메소드, true일때 만 리렌더링
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return nextProps.postDatas === this.state.postDatas;
-  // }
+  componentDidMount() {
+    this.props.setLoading();
+    this.getPostDatas();
+  }
+
+  //componentWillReceiveProps:컴포넌트가 prop 을 새로 받았을 때 실행
+  async componentWillReceiveProps(nextProps) {
+    //islogin 값이 변경 됐을 때 만 실행
+    if (this.props.isLogin !== nextProps.isLogin) {
+      await this.setState({
+        isLogin: nextProps.isLogin,
+        keyword: nextProps.keyword
+      });
+      this.props.setLoading();
+      this.getPostDatas();
+    }
+  }
 
   /**
    * posts 관련 json 데이터 state 저장
@@ -127,8 +150,7 @@ class PostProvider extends Component<Props, State> {
     this.setState({
       isMoreBtn:
         this.state.postCnt >= postDatas.totalPost.totalCnt ? false : true,
-      postDatas: postDatas.post,
-      keyword: ""
+      postDatas: postDatas.post
     });
   };
 

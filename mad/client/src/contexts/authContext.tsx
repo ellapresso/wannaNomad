@@ -1,7 +1,7 @@
 /**
  * 권한 관련 context
  */
-import React, { Component, createContext } from "react";
+import React, { PureComponent, createContext } from "react";
 import { KAKAO_API_KEY } from "../key/API_KEY";
 import axios from "axios";
 
@@ -10,7 +10,6 @@ const Context = createContext({});
 const { Provider, Consumer: AuthConsumer } = Context;
 
 /**
- * setPostDatas: post 권한 적용 이벤트
  * setLoading : 로딩 처리 이벤트
  * isModal: 모달 open 여부
  * isLogin: 로그인 여부
@@ -21,18 +20,27 @@ const { Provider, Consumer: AuthConsumer } = Context;
  */
 
 interface Props {
-  setPostDatas: any;
-  setLoading: any;
+  setPostDatas?: () => void;
+  setIsLogin: (type: boolean) => void;
+  setLoading: () => void;
 }
 interface State {
   isModal: boolean;
   isLogin: boolean;
+  isMenu: boolean;
+  userName: string;
+  userImg: string;
 }
 
-class AuthProvider extends Component<Props, State> {
+declare var Kakao: any;
+
+class AuthProvider extends PureComponent<Props, State> {
   state: State = {
     isModal: false,
-    isLogin: false
+    isLogin: false,
+    isMenu: false,
+    userName: "",
+    userImg: ""
   };
 
   actions = {
@@ -46,18 +54,23 @@ class AuthProvider extends Component<Props, State> {
     },
     onLogOut: async () => {
       this.props.setLoading();
-      await window.Kakao.Auth.logout();
-      this.getLoginStatus();
+      await Kakao.Auth.logout();
+      await this.getLoginStatus();
+      this.props.setLoading();
+    },
+    onMenu: () => {
+      this.setState({
+        isMenu: !this.state.isMenu
+      });
     }
   };
 
   componentDidMount() {
     //Kakao SDK에서 사용한 리소스를 해제합니다.
-    window.Kakao.cleanup();
+    Kakao.cleanup();
     //Kakao SDK를 초기화합니다.
-    window.Kakao.init(KAKAO_API_KEY);
-
-    this.props.setLoading();
+    Kakao.init(KAKAO_API_KEY);
+    //현재 로그인 상태 체크
     this.getLoginStatus();
   }
 
@@ -66,69 +79,52 @@ class AuthProvider extends Component<Props, State> {
    */
   login = () => {
     this.props.setLoading();
-    window.Kakao.Auth.login({
-      success: authObj => {
+    Kakao.Auth.login({
+      success: (authObj: object) => {
         axios
           .post("https://mad-server.herokuapp.com/kakaologin", {
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             Authorization: `Bearer ${authObj.access_token}`
           })
-          .then(res => {
-            this.getLoginStatus();
-            this.setState({ isModal: false });
+          .then(async res => {
+            await this.getLoginStatus();
+            await this.setState({ isModal: false });
+            this.props.setLoading();
           })
-          .catch(err => console.log(err));
+          .catch((err: object) => console.log(err));
       },
-      fail: err => {
+      fail: (err: object) => {
         console.log(err);
       }
     });
   };
-
   /**
    * 로그인 토큰 연결 여부 확인
    */
   getLoginStatus = () => {
-    window.Kakao.Auth.getStatus(
-      function(statusObj) {
-        console.log("1.getLoginStatus", statusObj);
-        if (statusObj.status === "connected") {
-          localStorage.setItem("loginId", statusObj.user.id);
-          this.setState({ isLogin: true });
-        } else {
-          localStorage.removeItem("loginId");
-          this.setState({ isLogin: false });
-        }
-        //post 데이터 가져오기
-        this.getPostDatas();
-      }.bind(this)
-    );
-  };
-
-  /**
-   * posts 관련 json 데이터 state 저장
-   */
-  getPostDatas = async () => {
-    const postDatas = await this.callPostDatasApi();
-    this.props.setLoading();
-    if (!postDatas) return false;
-    // 권한에 따른 전역 postDatas 업데이트
-    this.props.setPostDatas(postDatas.post);
-  };
-
-  /**
-   * posts 관련 데이터 조회
-   */
-  callPostDatasApi = () => {
-    return axios
-      .post("https://mad-server.herokuapp.com/api/post/list", {
-        headers: { "Content-type": "application/x-www-form-urlencoded" },
-        userId: localStorage.getItem("loginId")
-      })
-      .then(({ data }) => {
-        return data;
-      })
-      .catch(err => console.log(err));
+    console.log("getLoginStatus");
+    Kakao.Auth.getStatus((authStatus: object) => {
+      console.log("1.getLoginStatus", authStatus);
+      if (authStatus.status === "connected") {
+        // 고객 데이터 localStorage 저장
+        localStorage.setItem("loginId", authStatus.user.id);
+        this.setState({
+          isLogin: true,
+          userName: authStatus.user.properties.nickname,
+          userImg: authStatus.user.properties.profile_image
+        });
+        this.props.setIsLogin(true);
+      } else {
+        // localStorage 삭제
+        localStorage.clear();
+        this.setState({
+          isLogin: false,
+          userName: "",
+          userImg: ""
+        });
+        this.props.setIsLogin(false);
+      }
+    });
   };
 
   render() {

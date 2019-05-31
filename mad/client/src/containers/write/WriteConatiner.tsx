@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { WriteConsumer } from "../../contexts/writeContext";
-import Write from "../../components/write";
+import Write from "../../components/Write";
 import CodeView from "../../components/common/CodeView";
 import { TagsEdit } from "../../components/common/Tags";
 
-class WriteConatiner extends Component {
+class WriteConatiner extends PureComponent {
   render() {
     return (
       <div className="contentsWrap">

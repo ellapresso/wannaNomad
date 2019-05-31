@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 
 import { AuthProvider } from "../contexts/authContext";
 import { PostProvider } from "../contexts/postContext";
@@ -10,18 +10,21 @@ import { LoginModal } from "../components/common/Modal";
 import LoadingBar from "../components/common/LoadingBar";
 
 interface State {
-  postDatas: Array<object>;
+  isLogin: boolean;
   loading: boolean;
 }
 
-class Index extends Component<{}, State> {
+class Index extends PureComponent<{}, State> {
+  static async getInitialProps({ query }) {
+    return { keyword: query.keyword };
+  }
   state: State = {
-    postDatas: [],
+    isLogin: false,
     loading: false
   };
 
-  setPostDatas = postDatas => {
-    this.setState({ postDatas });
+  setIsLogin = (isLogin: boolean = false) => {
+    this.setState({ isLogin });
   };
 
   setLoading = () => {
@@ -29,17 +32,19 @@ class Index extends Component<{}, State> {
   };
 
   render() {
-    const { loading, postDatas } = this.state;
+    const { isLogin, loading } = this.state;
+    // console.log("isLogin :", isLogin, "loading :", loading);
     return (
       <Fragment>
-        <AuthProvider
-          setPostDatas={this.setPostDatas}
-          setLoading={this.setLoading}
-        >
+        <AuthProvider setIsLogin={this.setIsLogin} setLoading={this.setLoading}>
           {loading ? <LoadingBar /> : null}
           <HeaderContainer type="common" />
           <LoginModal />
-          <PostProvider postDatas={postDatas} setLoading={this.setLoading}>
+          <PostProvider
+            isLogin={isLogin}
+            setLoading={this.setLoading}
+            keyword={this.props.keyword}
+          >
             <PostContainer />
           </PostProvider>
         </AuthProvider>

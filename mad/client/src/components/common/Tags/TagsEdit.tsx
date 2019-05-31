@@ -4,7 +4,7 @@ import "./tags.css";
 
 interface Props {
   hash: Array<string>;
-  setHash: any;
+  setHash: () => void;
 }
 interface State {
   tags: Array<string>;
@@ -19,15 +19,15 @@ class TagsEdit extends Component<Props, State> {
     inputValue: ""
   };
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: any) {
     this.setState({
       tags: nextProps.hash
     });
   }
 
   //태그 제거
-  handleClose = removedTag => {
-    const tags = this.state.tags.filter(tag => tag !== removedTag);
+  handleClose = (removedTag: any) => {
+    const tags = this.state.tags.filter((tag: string) => tag !== removedTag);
     this.setState({ tags }, () => {
       this.props.setHash(this.state.tags);
     });

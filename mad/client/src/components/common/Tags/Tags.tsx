@@ -26,7 +26,21 @@ const Tags = ({ tagDatas, styleClass }) => {
   const tagList = tagDatas.map((tagData, index) => {
     return <TagItem tagList={tagData} key={index} />;
   });
-  return <div className={styleClass}>{tagList}</div>;
+  return (
+    <div className={styleClass}>
+      {styleClass === "topTagWrap" ? (
+        <Tag
+          color="#40a9ff"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          ALL
+        </Tag>
+      ) : null}
+      {tagList}
+    </div>
+  );
 };
 
 export default Tags;

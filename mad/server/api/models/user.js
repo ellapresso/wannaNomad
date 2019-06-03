@@ -37,7 +37,7 @@ const User = {
             });
     },
     writedList: (id) => {
-        const sql = 'select * from `posts` where `writer` = ? and `isDel` = 0';
+        const sql = 'select * from `posts` where `writer` = ? and `isDel` = 0 order by `wrDate` desc';
         return madDatabase
             .promise()
             .query(sql, id)
@@ -46,7 +46,7 @@ const User = {
             });
     },
     likeList: (id) => {
-        const sql = 'select * from `posts` p inner join `likes` l on p.`pno` = l.`pno` where `luser` = ? and `isDel` = 0';
+        const sql = 'select * from `posts` p inner join `likes` l on p.`pno` = l.`pno` where `luser` = ? and `isDel` = 0 order by `lno` desc';
         return madDatabase
             .promise()
             .query(sql, id)

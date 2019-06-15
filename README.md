@@ -7,6 +7,8 @@
 
 ## 주마다 진행되는 스터디전, 위키에 일지를 일정횟수 기입하도록 하세요.
 
+
+#git pull req test
 ---
 
 #### GIT PULL 후, 본인 작업내역 COMMIT & PUSH

@@ -66,5 +66,7 @@ const GHOST_OBJ = {
 
 const mapArr[] = new Array(BOARD_OBJ.mapSize.width);
 
+console.log(123);
+
 
 

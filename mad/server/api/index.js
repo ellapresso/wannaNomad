@@ -6,9 +6,11 @@ const postCtrl = require('./controllers/post');
 const hashCtrl = require('./controllers/hash');
 const likeCtrl = require('./controllers/like');
 const loginCtrl = require('./controllers/login');
+const userCtrl = require('./controllers/user');
 
 const POST = '/api/post';
 const HASH = '/api/hash';
+const USER = '/api/user';
 
 module.exports = (app) => {
     const router = new Router();
@@ -30,7 +32,13 @@ module.exports = (app) => {
 
     router.post(`/api/like`, likeCtrl.setLike);
     router.post(`/api/unlike`, likeCtrl.delLike);
+    router.get(`/api/like/rank`, likeCtrl.rankLike);
 
     router.get(`/api/chart-hash`, hashCtrl.chartHash);
     router.get(`/api/chart-like`, likeCtrl.chartLike);
+
+    // 마이페이지
+    router.post(`${USER}`, userCtrl.getUserInfo);
+    router.post(`${USER}-writed`, userCtrl.writedList);
+    router.post(`${USER}-like`, userCtrl.likeList);
 };

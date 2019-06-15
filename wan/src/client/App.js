@@ -4,7 +4,7 @@ import './app.css';
 
 class MyComponent extends Component {
     state={
-      hi:"hello!"
+      hi:"hello world!"
     }
     render() {
         return(

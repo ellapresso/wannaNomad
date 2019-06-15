@@ -54,8 +54,6 @@ const GHOST_OBJ = {
             maxCnt : 10
         },
     };
-
-
 }
 
 
@@ -67,6 +65,12 @@ const GHOST_OBJ = {
 const mapArr[] = new Array(BOARD_OBJ.mapSize.width);
 
 console.log(123);
+console.log(123);
+console.log(123);
+console.log(123);console.log(123);
+console.log(123);
+
+
 
 
 

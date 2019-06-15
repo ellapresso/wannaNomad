@@ -1,0 +1,29 @@
+@keyframes loading {
+  from {
+    width: 0px;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.loadingBarWrap {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.loadingBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: #40a9ff;
+  animation-duration: 8s;
+  animation-name: loading;
+  z-index: 100000;
+}

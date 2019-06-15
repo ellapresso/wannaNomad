@@ -1,169 +1,130 @@
-import React, { Component, createContext } from "react";
+/**
+ * 권한 관련 context
+ */
+import React, { PureComponent, createContext } from "react";
 import { KAKAO_API_KEY } from "../key/API_KEY";
-import moment from "moment";
 import axios from "axios";
 
-const Context = createContext({}); // Context 를 만듭니다.
+//Context 생성
+const Context = createContext({});
 const { Provider, Consumer: AuthConsumer } = Context;
 
+/**
+ * setLoading : 로딩 처리 이벤트
+ * isModal: 모달 open 여부
+ * isLogin: 로그인 여부
+ * loading: 로딩 display 여부
+ * onModal: 모달 이벤트
+ * onLogin: 로그인 이벤트
+ * onLogout: 로그아웃 이벤트
+ */
+
+interface Props {
+  setPostDatas?: () => void;
+  setIsLogin: (type: boolean) => void;
+  setLoading: () => void;
+}
 interface State {
-  isOpen: boolean;
+  isModal: boolean;
   isLogin: boolean;
-  loading: boolean;
-  postDatas: Array<object>;
+  isMenu: boolean;
+  userName: string;
+  userImg: string;
 }
 
-class AuthProvider extends Component<{}, State> {
+declare var Kakao: any;
+
+class AuthProvider extends PureComponent<Props, State> {
   state: State = {
-    isOpen: false,
+    isModal: false,
     isLogin: false,
-    loading: false,
-    postDatas: []
+    isMenu: false,
+    userName: "",
+    userImg: ""
   };
 
   actions = {
     onModal: () => {
       this.setState({
-        isOpen: !this.state.isOpen
+        isModal: !this.state.isModal
       });
     },
     onLogin: () => {
-      return this.state.isLogin;
+      this.login();
     },
     onLogOut: async () => {
-      await window.Kakao.Auth.logout();
-      this.getLoginStatus();
+      this.props.setLoading();
+      await Kakao.Auth.logout();
+      await this.getLoginStatus();
+      this.props.setLoading();
     },
-    onDelete: pno => {
-      // console.log("@onDelete");
-      axios
-        .post("https://mad-server.herokuapp.com/api/post/del", {
-          headers: { "Content-type": "application/x-www-form-urlencoded" },
-          pno,
-          writer: localStorage.getItem("loginId"),
-          upDate: moment().format("YYYY-MM-DD H:mm:ss")
-        })
-        .then(res => {
-          // console.log("@onDelete", res);
-          this.getPostDatas();
-        })
-        .catch(err => console.log(err));
-    },
-    onLike: pno => {
-      // console.log("@onLike");
-      axios
-        .post("https://mad-server.herokuapp.com/api/like", {
-          headers: { "Content-type": "application/x-www-form-urlencoded" },
-          pno,
-          userId: localStorage.getItem("loginId")
-        })
-        .then(res => {
-          this.getPostDatas();
-        })
-        .catch(err => console.log(err));
-    },
-    offLike: pno => {
-      // console.log("@offLike");
-      axios
-        .post("https://mad-server.herokuapp.com/api/unlike", {
-          headers: { "Content-type": "application/x-www-form-urlencoded" },
-          pno,
-          userId: localStorage.getItem("loginId")
-        })
-        .then(res => {
-          this.getPostDatas();
-        })
-        .catch(err => console.log(err));
+    onMenu: () => {
+      this.setState({
+        isMenu: !this.state.isMenu
+      });
     }
   };
 
   componentDidMount() {
     //Kakao SDK에서 사용한 리소스를 해제합니다.
-    window.Kakao.cleanup();
+    Kakao.cleanup();
     //Kakao SDK를 초기화합니다.
-    window.Kakao.init(KAKAO_API_KEY);
-
-    // 토큰 연결 여부
+    Kakao.init(KAKAO_API_KEY);
+    //현재 로그인 상태 체크
     this.getLoginStatus();
-
-    //로그인
-    this.login();
   }
 
+  /**
+   * kakao 로그인
+   */
   login = () => {
-    window.Kakao.Auth.createLoginButton({
-      container: ".kakao-login-btn",
-      success: authObj => {
-        this.setState({
-          loading: true
-        });
+    this.props.setLoading();
+    Kakao.Auth.login({
+      success: (authObj: object) => {
         axios
           .post("https://mad-server.herokuapp.com/kakaologin", {
             headers: { "Content-type": "application/x-www-form-urlencoded" },
             Authorization: `Bearer ${authObj.access_token}`
           })
-          .then(res => {
-            // console.log("@KakaoLogin", res);
-            // 토큰 연결 여부
-            this.getLoginStatus();
-            //모달 및 로딩 제거
-            this.setState({
-              isOpen: false,
-              loading: false
-            });
+          .then(async res => {
+            await this.getLoginStatus();
+            await this.setState({ isModal: false });
+            this.props.setLoading();
           })
-          .catch(err => console.log(err));
+          .catch((err: object) => console.log(err));
       },
-      fail: err => {
+      fail: (err: object) => {
         console.log(err);
       }
     });
   };
-
-  // 로그인 상태 체크
+  /**
+   * 로그인 토큰 연결 여부 확인
+   */
   getLoginStatus = () => {
-    window.Kakao.Auth.getStatus(
-      function(statusObj) {
-        console.log("1.getLoginStatus", statusObj);
-        if (statusObj.status === "connected") {
-          localStorage.setItem("loginId", statusObj.user.id);
-          this.setState({
-            isLogin: true
-          });
-        } else {
-          localStorage.removeItem("loginId");
-          this.setState({
-            isLogin: false
-          });
-        }
-        //post 데이터 가져오기
-        this.getPostDatas();
-      }.bind(this)
-    );
-  };
-
-  //post 데이터 가져오기
-  getPostDatas = async () => {
-    // console.log("2.getPostDatas - userId :", localStorage.getItem("loginId"));
-    const postDatas = await this.callPostDatasApi();
-    if (!postDatas) return false;
-    this.setState({
-      postDatas
+    console.log("getLoginStatus");
+    Kakao.Auth.getStatus((authStatus: object) => {
+      console.log("1.getLoginStatus", authStatus);
+      if (authStatus.status === "connected") {
+        // 고객 데이터 localStorage 저장
+        localStorage.setItem("loginId", authStatus.user.id);
+        this.setState({
+          isLogin: true,
+          userName: authStatus.user.properties.nickname,
+          userImg: authStatus.user.properties.profile_image
+        });
+        this.props.setIsLogin(true);
+      } else {
+        // localStorage 삭제
+        localStorage.clear();
+        this.setState({
+          isLogin: false,
+          userName: "",
+          userImg: ""
+        });
+        this.props.setIsLogin(false);
+      }
     });
-  };
-
-  //post API 호출
-  callPostDatasApi = () => {
-    return axios
-      .post("https://mad-server.herokuapp.com/api/post/list", {
-        headers: { "Content-type": "application/x-www-form-urlencoded" },
-        userId: localStorage.getItem("loginId")
-      })
-      .then(res => {
-        // console.log("3.callPostDatasApi :", res.data);
-        return res.data;
-      })
-      .catch(err => console.log(err));
   };
 
   render() {

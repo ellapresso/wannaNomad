@@ -12,25 +12,20 @@ require("prismjs/components/prism-jsx.min.js");
 require("prismjs/components/prism-css.min.js");
 
 interface Props {
-  type: string;
   markdown: string;
-  setContents?: any;
+  type: string;
+  setContents?: () => void;
 }
 interface State {
   html: string;
 }
 
 export class Code extends Component<Props, State> {
-  constructor(props) {
-    super(props);
-    const { markdown } = props;
-
-    this.state = {
-      html: markdown
-        ? marked(props.markdown, { breaks: true, sanitize: true })
-        : ""
-    };
-  }
+  state: State = {
+    html: this.props.markdown
+      ? marked(this.props.markdown, { breaks: true, sanitize: true })
+      : ""
+  };
   _renderMarkdown = () => {
     const { markdown } = this.props;
 
@@ -46,11 +41,11 @@ export class Code extends Component<Props, State> {
     });
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevProps.markdown !== this.props.markdown) {
       this._renderMarkdown();
     }
-    // console.log(prevProps, prevState);
+
     if (prevState.html !== this.state.html) {
       Prism.highlightAll();
     }

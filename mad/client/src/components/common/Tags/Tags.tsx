@@ -1,3 +1,4 @@
+import { PostConsumer } from "../../../contexts/postContext";
 import { Tag, Tooltip } from "antd";
 import "./tags.css";
 
@@ -8,16 +9,38 @@ interface TagItem {
 const TagItem = ({ tagList }: TagItem) => {
   const isLongTag = tagList.length > 6;
   const tag = (
-    <Tag color="#000">{isLongTag ? `${tagList.slice(0, 6)}...` : tagList}</Tag>
+    <PostConsumer>
+      {({ actions }: any) => (
+        <Tooltip title={tagList}>
+          <Tag color="#000" onClick={actions.onSearch} data-keyword={tagList}>
+            {isLongTag ? `${tagList.slice(0, 6)}...` : tagList}
+          </Tag>
+        </Tooltip>
+      )}
+    </PostConsumer>
   );
-  return isLongTag ? <Tooltip title={tagList}>{tag}</Tooltip> : tag;
+  return tag;
 };
 
 const Tags = ({ tagDatas, styleClass }) => {
   const tagList = tagDatas.map((tagData, index) => {
     return <TagItem tagList={tagData} key={index} />;
   });
-  return <div className={styleClass}>{tagList}</div>;
+  return (
+    <div className={styleClass}>
+      {styleClass === "topTagWrap" ? (
+        <Tag
+          color="#40a9ff"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          ALL
+        </Tag>
+      ) : null}
+      {tagList}
+    </div>
+  );
 };
 
 export default Tags;

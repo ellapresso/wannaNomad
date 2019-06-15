@@ -1,0 +1,16 @@
+.modeBtn {
+  position: relative;
+  width: 30%;
+  margin: 0 auto 20px !important;
+  padding: 10px 0;
+  border-radius: 10px;
+  text-align: center;
+  background: #fff;
+  color: #000;
+  /* z-index: 100; */
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

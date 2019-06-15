@@ -1,10 +1,19 @@
-import { AuthConsumer } from "../../../contexts/authContext";
+import { PostConsumer } from "../../../contexts/postContext";
 import { Statistic, Icon, message } from "antd";
 import "./likes.css";
+interface likes {
+  like: number;
+  love: number;
+  pno: number;
+}
 
-const Likes = ({ likeDatas, love, pno }) => {
+interface Actions {
+  offLike: () => void;
+  onLike: () => void;
+}
+const Likes = ({ like, love, pno }: likes) => {
   const color = love === 1 ? "#f5222d" : "#ccc";
-  const likeEvt = actions => {
+  const likeEvt = (actions: Actions) => {
     if (localStorage.getItem("loginId")) {
       return love === 1 ? actions.offLike(pno) : actions.onLike(pno);
     } else {
@@ -13,7 +22,7 @@ const Likes = ({ likeDatas, love, pno }) => {
   };
 
   return (
-    <AuthConsumer>
+    <PostConsumer>
       {({ actions }: any) => (
         <div
           className="likeWrap"
@@ -22,13 +31,13 @@ const Likes = ({ likeDatas, love, pno }) => {
           }}
         >
           <Statistic
-            value={likeDatas}
+            value={like}
             prefix={<Icon type="heart" theme="filled" />}
             valueStyle={{ fontSize: 18, lineHeight: "20px", color: color }}
           />
         </div>
       )}
-    </AuthConsumer>
+    </PostConsumer>
   );
 };
 

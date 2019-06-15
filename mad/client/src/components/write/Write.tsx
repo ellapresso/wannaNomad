@@ -8,23 +8,24 @@ import "codemirror/theme/material.css";
 
 interface Props {
   contents: string;
-  setContents: any;
+  setContents: () => void;
 }
 interface State {}
 
 class Editor extends Component<Props, State> {
   render() {
+    const { contents, setContents } = this.props;
     return (
       <div className="codemirror">
         <CodeMirror
-          value={this.props.contents}
+          value={contents}
           options={{
             mode: "xml",
             theme: "material",
             lineNumbers: true
           }}
           onBeforeChange={(editor, data, value) => {
-            this.props.setContents(value);
+            setContents(value);
           }}
         />
       </div>

@@ -62,19 +62,14 @@ const findNum2 = arr => {
   const setData = new Set(arr2);
 
   const arr3 = [];
-  for (let index = 1; index <= arr2[arr2.length - 1]; index++) {
+  for (let index = arr2[arr2.length - 1]; index >= 1; index--) {
     if (!setData.has(index)) {
-      arr3.push(index);
+      // 3. 숫자를 오름차순으로 나열해서 빈 숫자중 가장 큰 수를 출력한다.
+      return index;
     }
   }
-
-  if (!arr3.length) {
-    // 6. 빈 숫자가 없을 경우 가장 큰수에 +1한 결과값을 출력한다.
-    return arr2.pop() + 1;
-  } else {
-    // 3. 숫자를 오름차순으로 나열해서 빈 숫자중 가장 큰 수를 출력한다.
-    return arr3.pop();
-  }
+  // 6. 빈 숫자가 없을 경우 가장 큰수에 +1한 결과값을 출력한다.
+  return arr2.pop() + 1;
 };
 
 console.log(findNum2([-1, -2, -3, 1, 2, 3, 6])); // 5
@@ -86,4 +81,4 @@ console.log(findNum2([1, 2, 6, 7])); // 5
 console.log(findNum2([])); // 0
 console.log(findNum2([3, 4, 3, 3])); // 2
 console.log(findNum2([2, 2, 2, 2])); // 1
-console.log(findNum2([0, 0, 0, 0])); // 1
+console.log(findNum2([0, 0, 0, 0])); // 0

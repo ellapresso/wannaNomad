@@ -1,120 +1,42 @@
 {
-  "name": "nano",
+  "name": "@vuetify-theme/blog",
   "version": "0.1.0",
-  "engines": {
-    "node": "10.15.1"
-  },
   "private": true,
   "scripts": {
+    "deploy": "yarn build && now && now alias",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "start": "supervisor app.js",
-    "postinstall": "npm install express"
+    "test:e2e": "vue-cli-service test:e2e",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@mdi/font": "^3.6.95",
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-plugin-unit-jest": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
-    "@vue/eslint-config-prettier": "^4.0.1",
-    "@vue/test-utils": "1.0.0-beta.29",
-    "axios": "^0.18.0",
-    "babel-core": "7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
-    "body-parser": "*",
-    "core-js": "^2.6.5",
-    "cors": "^2.8.5",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "oracledb": "^3.1.2",
-    "serve-static": "^1.13.2",
-    "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1",
     "vue": "^2.6.6",
-    "vue-cli-plugin-vuetify": "^0.5.0",
-    "vue-cookies": "^1.5.13",
-    "vue-loading-overlay": "^3.2.0",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.5.21",
-    "vuelidate": "^0.7.4",
-    "vuetify": "^1.5.12",
-    "vuetify-loader": "^1.0.5",
-    "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0"
+    "vuetify": "^1.5.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.0",
-    "@vue/cli-plugin-eslint": "^3.5.0",
-    "@vue/cli-plugin-unit-jest": "^3.5.0",
-    "@vue/cli-service": "^3.5.0",
-    "@vue/eslint-config-prettier": "^4.0.1",
-    "@vue/test-utils": "1.0.0-beta.29",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-e2e-cypress": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-plugin-unit-jest": "^3.3.0",
+    "@vue/cli-service": "^3.3.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "body-parser": "*",
     "eslint": "^5.8.0",
+    "eslint-config-vuetify": "*",
     "eslint-plugin-vue": "^5.0.0",
-    "express": "^4.16.4",
-    "serve-static": "^1.13.2",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
-    "vue-cli-plugin-vuetify": "^0.5.0",
-    "vue-template-compiler": "^2.5.21",
+    "vue-cli-plugin-eslint-config-vuetify": "latest",
+    "vue-cli-plugin-vuetify": "latest",
+    "vue-template-compiler": "^2.6.6",
     "vuetify-loader": "^1.0.5"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.vue$": "vue-jest",
-      ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$": "jest-transform-stub",
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    },
-    "snapshotSerializers": [
-      "jest-serializer-vue"
-    ],
-    "testMatch": [
-      "**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)"
-    ],
-    "testURL": "http://localhost/"
   }
 }

@@ -3,8 +3,11 @@ const oracledb     = require('oracledb');
 // 오라클에서는 자동커밋을 지원하지 않아, 데이터 INSERT, UPDATE, DELETE 후 조회해도 반영되지 않음.
 oracledb.autoCommit = true;
 
+
+
+
 const tools = function(){
-    
+
     this.dbInfo = {
         user          : "system",
         password      : "oracle",
@@ -15,7 +18,7 @@ const tools = function(){
         getDBInfo : function() {
             return dbInfo;
         },
-        executeQuery : function(query, callback) {
+        executeQuery : function(query, param, callback) {
             console.log(query);
             
             oracledb.getConnection(
@@ -26,12 +29,10 @@ const tools = function(){
                         return;
                     }
 
-                    
-
-                    connection.execute(query, function(err, result){
+                    connection.execute(query, param, function(err, result){
                         if(err){
                             console.log(err.message);
-                            return;
+                            return callback(err, null);
                         }
 
                         console.log('ROW AFFECTED : ' + result.rowsAffected);

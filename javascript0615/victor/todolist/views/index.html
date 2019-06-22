@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="../resources/css/main.css">
+<script src="../resources/js/main.js"></script>
+</head>
+<body>
+    <div id="container">
+        <section class="title">
+            <h1>TO DO LIST</h1>
+        </section>
+        <section id="write_sec">
+            <form id="newTodo" action="" method="post">
+                <h3>To Do List 작성</h3>
+                <ul>
+                    <li>
+                        <label class="todoLabel" for="todo">할일</label>
+                        <input type="text" id="todo" name="todo">
+                    </li>
+                    <li>
+                        <label class="todoLabel" for="fromDate">시작일</label>
+                        <input type="text" id="fromDate" name="fromDate">
+                    </li>
+                    <li>
+                        <label class="todoLabel" for="toDate">종료일</label>
+                        <input type="text" id="toDate" name="toDate">
+                    </li>
+                </ul>
+                <div class="buttons">
+                    <button type="submit">저장</button>
+                </div>
+            </form>
+        </section>
+        <section id="button_sec">
+            <div class="buttons">
+                <input type="button" id="udpate" value="수정">
+                <input type="button" id="delete" value="삭제">
+                <input type="button" id="complete" value="완료">
+            </div>
+        </section>
+        <section id="list_sec">
+            <div id="divTable">
+                <div class="th">
+                    <div class="check">-</div>
+                    <div class="todo">할일</div>
+                    <div class="fromDate">시작일</div>
+                    <div class="toDate">종료일</div>
+                </div>
+                <div class="tr">
+                    <div class="check">
+                        <input type="checkbox" name="check" id="checkbox1"/>
+                    </div>
+                    <div class="todo">스터디과제</div>
+                    <div class="fromDate">2019-06-15</div>
+                    <div class="toDate">2019-06-22</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

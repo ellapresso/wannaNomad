@@ -1,0 +1,50 @@
+.title{
+    text-align: center;
+}
+
+#newTodo{
+    border: 1px solid;
+    text-align: center;
+}
+
+li{
+    list-style: none;
+}
+
+.buttons button{
+    margin: 7px 0;
+    padding: 0 5px;
+}
+
+.todoLabel{
+    width: 70px;
+    display: inline-block;
+}
+
+#list_sec{
+    margin-top: 20px;
+}
+
+#button_sec{
+    float: right;
+    margin-top: 20px;
+}
+
+#divTable {
+    float:left;
+    border-top:1px solid #cccccc;
+    border-left:1px solid #cccccc;
+}
+
+#divTable .th, .tr
+{
+    clear:both;
+}
+
+#divTable .th div, .tr div {
+    float:left;
+    text-align: center;
+    border-right:1px solid #cccccc;
+    border-bottom:1px solid #cccccc;
+    width:100px;
+}

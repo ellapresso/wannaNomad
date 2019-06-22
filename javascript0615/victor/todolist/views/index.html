@@ -2,7 +2,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="../resources/css/main.css">
-<script src="../resources/js/main.js"></script>
+<script type="text/javascript" src="../resources/js/main.js"></script>
 </head>
 <body>
     <div id="container">
@@ -10,7 +10,7 @@
             <h1>TO DO LIST</h1>
         </section>
         <section id="write_sec">
-            <form id="newTodo" action="" method="post">
+            <div id="newTodo">
                 <h3>To Do List 작성</h3>
                 <ul>
                     <li>
@@ -19,23 +19,24 @@
                     </li>
                     <li>
                         <label class="todoLabel" for="fromDate">시작일</label>
-                        <input type="text" id="fromDate" name="fromDate">
+                        <input type="date" id="fromDate" name="fromDate">
                     </li>
                     <li>
                         <label class="todoLabel" for="toDate">종료일</label>
-                        <input type="text" id="toDate" name="toDate">
+                        <input type="date" id="toDate" name="toDate">
                     </li>
                 </ul>
                 <div class="buttons">
-                    <button type="submit">저장</button>
+                    <input type="button" id="insert" value="저장">
                 </div>
-            </form>
+            </div>
         </section>
         <section id="button_sec">
             <div class="buttons">
                 <input type="button" id="udpate" value="수정">
                 <input type="button" id="delete" value="삭제">
                 <input type="button" id="complete" value="완료">
+                <input type="button" id="clear" value="전체지우기">
             </div>
         </section>
         <section id="list_sec">

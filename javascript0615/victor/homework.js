@@ -12,7 +12,7 @@ const getNum = arr =>{
     let result;
 
     //배열이 아닐경우
-    if (!Array.isArray(arr)) { throw '배열을 입력하세요'; }
+    if (!Array.isArray(arr)) { return -1 }
 
     //1. 배열에 마이너스가 들어갈 경우 무시한다. (없는취급한다. ex:[-1,-2]의 경우 빈배열과 같음)
     arr.forEach((v, i) => {
@@ -27,8 +27,7 @@ const getNum = arr =>{
     
     //7. 빈배열은 0출력.   
     if(RNArr.length == 0){
-        result = 0;
-        return result;
+        return 0;
     }
 
     //5. 같은수의 경우 하나의 수로 취급. ([2,2,2,2]의 경우 [2]와 동일
@@ -45,23 +44,28 @@ const getNum = arr =>{
 
     if(sortArr[0] !== 0){
         if(len == 1){
+            //[2] => 1
             result = sortArr[len-1] - 1;
         }else{
             for(let i = len-1; i>0;i--){
-                if (sortArr[i] - sortArr[i - 1] != 1 ){
+                if (sortArr[i] - sortArr[i-1] != 1 ){
+                    //[2,3,5,7,8] => 6
                     result = sortArr[i] - 1;
                     break;
                 }else{
+                    //[2,3,4,5,6] => 1
                     result = sortArr[i-1]-1;
                 }
             }
         }
     }else{
         for(let i = len-1; i>0;i--){
-            if (sortArr[i] - sortArr[i - 1] != 1 ){
+            if (sortArr[i] - sortArr[i-1] != 1 ){
+                //[0,1,2,4,5] => 3
                 result = sortArr[i] - 1;
                 break;
             }else{
+                //[0,1,2,3,4] => 5
                 result = sortArr[len-1]+1;
             }
         }
@@ -75,5 +79,3 @@ const getNum = arr =>{
 function sortNumber(a, b) {
     return a - b;
 }
-
-console.log(getNum([0,1,2,-2,4,3]));

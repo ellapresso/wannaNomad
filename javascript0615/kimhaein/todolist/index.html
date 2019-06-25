@@ -1,28 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
   <head>
-    <title>바닐라 자바스크립트</title>
+    <meta charset="utf-8"></meta>
+    <title>자바스크립트 - TODOLIST</title>
     <link rel="stylesheet" href="./reset.css" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div class="main_wrap">
       <article class="container">
-        <section class="title">
+        <section id="title">
           <h1>
             2019.07.01
           </h1>
-          <span class="total_tasks">2 Tasks</span>
+          <span id="total_tasks"></span>
         </section>
         <section class="input_wrap">
-          <form>
+          <form id="todoForm">
             <div class="task">
               <label for="task">Task</label>
               <input type="text" name="task" id="task" required />
-            </div>
-            <div class="time">
-              <label for="time">Time</label>
-              <input type="time" name="time" id="time" />
             </div>
             <button type="submit" class="submit">
               <img src="./images/plus.png" alt="submit" />
@@ -30,24 +27,10 @@
           </form>
         </section>
         <section class="list_container">
-          <div class="list_wrap">
-            <div class="list">
-              <div class="checkbox_wrap">
-                <input type="checkbox" name="check" id="checkbox01" />
-                <label for="checkbox01"></label>
-              </div>
-              <div class="task_wrap">
-                <span class="task_contents">물마시기</span>
-                <span class="time_contents">10:00</span>
-              </div>
-              <div class="btn_wrap">
-                <span class="modify"></span>
-                <span class="trash"></span>
-              </div>
-            </div>
-          </div>
+          <div id="list_wrap"></div>
         </section>
       </article>
     </div>
+    <script type="text/javascript" src="./index.js"></script>
   </body>
 </html>

@@ -57,11 +57,10 @@ const findNum2 = arr => {
   if (!arr2.length) return 0;
 
   // 3. 숫자를 오름차순으로 나열
-  arr2.sort();
+  arr2.sort((a, b) => a - b);
   // 5. 같은수의 경우 하나의 수로 취급. ([2,2,2,2]의 경우 [2]와 동일
   const setData = new Set(arr2);
 
-  const arr3 = [];
   for (let index = arr2[arr2.length - 1]; index >= 1; index--) {
     if (!setData.has(index)) {
       // 3. 숫자를 오름차순으로 나열해서 빈 숫자중 가장 큰 수를 출력한다.
@@ -82,3 +81,4 @@ console.log(findNum2([])); // 0
 console.log(findNum2([3, 4, 3, 3])); // 2
 console.log(findNum2([2, 2, 2, 2])); // 1
 console.log(findNum2([0, 0, 0, 0])); // 0
+console.log(findNum2([3, 1, 11])); // 10

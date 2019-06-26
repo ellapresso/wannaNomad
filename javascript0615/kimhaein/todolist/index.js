@@ -1,11 +1,9 @@
-class Todo {
+class TodoList {
   constructor(props) {
-    // localStorage.clear();
     this.target = props;
     this.list = JSON.parse(localStorage.getItem(this.target.todoList)) || {};
     this.totalCnt = Object.keys(this.list).length || 0;
     this.currId = Number(Object.keys(this.list)[this.totalCnt - 1]) || 0;
-    this.isEdit = false;
   }
 
   // 초기화
@@ -17,15 +15,13 @@ class Todo {
 
   // 오늘 날짜 설정
   setDate() {
-    const header = document.getElementById(this.target.header);
     const date = new Date().toISOString().substring(0, 10);
-    header.querySelectorAll("h1")[0].innerHTML = date;
+    document.querySelectorAll("h1")[0].innerHTML = date;
   }
 
   // 리스트 총 갯수 설정
   setTotalCnt() {
-    document.getElementById(this.target.total).innerHTML =
-      this.totalCnt + " Tasks";
+    document.getElementById(this.target.total).innerHTML = Object.keys(this.list).length + " Tasks";
   }
 
   // 리스트 조회 및 랜더
@@ -48,15 +44,12 @@ class Todo {
             </span>
           </div>
           <div class="btn_wrap">
-            <span class="modify" data-id="${
-              value.id
-            }" onclick="onEdit(event)"></span>
-            <span class="trash" data-id="${
-              value.id
-            }" onclick="onDelete(event)"></span>
+            <span class="modify" data-id="${value.id}" onclick="onEditMode(event)"></span>
+            <span class="trash" data-id="${value.id}" onclick="onDelete(event)"></span>
           </div>
         </div>`.trim();
     });
+
     const target = document.getElementById(this.target.list);
     target.innerHTML = htmls.join("");
     this.setTotalCnt();
@@ -85,26 +78,19 @@ class Todo {
     this.renderList();
   }
 
-  onChangeMode(id) {
+  //수정 모드 전환
+  onEditMode(id) {
     const target = document.getElementById("list_" + id);
-    target.querySelector(
-      ".task_wrap"
-    ).innerHTML = `<input type="text" class="task_contents" value="${
-      this.list[id].task
-    }"/>`;
-
-    target.querySelector(
-      ".btn_wrap"
-    ).innerHTML = `<span class="completed" data-id="${id}" onclick="onCompleted(event)"></span>`;
+    target.querySelector(".task_wrap").innerHTML = `<input type="text" class="task_contents" value="${this.list[id].task}"/>`;
+    target.querySelector(".btn_wrap").innerHTML = `<span class="completed" data-id="${id}" onclick="onEdit(event)"></span>`;
+    target.querySelector(".task_contents").focus();
   }
 
   // 리스트 수정
   onEdit(id) {
-    this.list[id].task = document
-      .getElementById("list_" + id)
-      .querySelector(".task_contents").value;
+    this.list[id].task = document.getElementById("list_" + id).querySelector(".task_contents").value;
     this.utilSetStore(this.target.todoList, this.list);
-    this.renderList(id);
+    this.renderList();
   }
 
   // 리스트 Check 상태 변경
@@ -119,6 +105,23 @@ class Todo {
   utilSetStore(target, data) {
     localStorage.setItem(target, JSON.stringify(data));
   }
+  // 이벤트
+  utilEvt(target, callback) {
+    const id = target.dataset["id"]; //IE 11 이상만 지원
+    const checked = target.checked;
+    callback.call(this, id, checked);
+  }
+}
+
+class TodoEvent extends TodoList {
+  constructor(props) {
+    super(props);
+    console.log(props);
+  }
+
+  test() {
+    console.log(1);
+  }
 }
 
 const target = {
@@ -129,40 +132,34 @@ const target = {
   input: "task"
 };
 
-const todolist = new Todo(target);
+const todolist = new TodoEvent(target);
 todolist.setInit();
+todolist.test();
 
 // 리스트 등록
 const todoForm = document.getElementById("todoForm");
 todoForm.onsubmit = event => {
   event.preventDefault();
   todolist.onSubmit();
+  todoForm.reset();
 };
 
 // check 저장
-const onCheck = event => {
-  const target = event.currentTarget;
-  const id = target.dataset["id"]; //IE 11 이상만 지원
-  const checked = target.checked;
-  todolist.onChangeCheck(id, checked);
+const onCheck = ({ currentTarget }) => {
+  todolist.utilEvt(currentTarget, todolist.onChangeCheck);
 };
 
 // 리스트 삭제
-const onDelete = event => {
-  const target = event.currentTarget;
-  const id = target.dataset["id"]; //IE 11 이상만 지원
-  todolist.onListDelete(id);
+const onDelete = ({ currentTarget }) => {
+  todolist.utilEvt(currentTarget, todolist.onListDelete);
 };
 
 //리스트 수정모드
-const onEdit = event => {
-  const target = event.currentTarget;
-  const id = target.dataset["id"]; //IE 11 이상만 지원
-  todolist.onChangeMode(id);
+const onEditMode = ({ currentTarget }) => {
+  todolist.utilEvt(currentTarget, todolist.onEditMode);
 };
 
-const onCompleted = event => {
-  const target = event.currentTarget;
-  const id = target.dataset["id"]; //IE 11 이상만 지원
-  todolist.onEdit(id);
+// 리스트 수정완료
+const onEdit = ({ currentTarget }) => {
+  todolist.utilEvt(currentTarget, todolist.onEdit);
 };

@@ -1,28 +1,5 @@
 window.onload = function(){
-    const list = document.getElementById('divTable');
-
-    for(let i =0; i < localStorage.length; i++){
-        const todoJson = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        const check = document.createElement('div');
-        const checkInput = document.createElement("input");
-        checkInput.setAttribute("type", "checkbox");
-        check.appendChild(checkInput);
-        const todo = document.createElement('div');
-        todo.appendChild(document.createTextNode(todoJson.todo));
-        const fromDate = document.createElement('div');
-        fromDate.appendChild(document.createTextNode(todoJson.fromDate));
-        const toDate = document.createElement('div');
-        toDate.appendChild(document.createTextNode(todoJson.toDate));
-
-        const tr = document.createElement('div');
-        tr.classList.add('tr');
-        tr.appendChild(check);
-        tr.appendChild(todo);
-        tr.appendChild(fromDate);
-        tr.appendChild(toDate);
-
-        list.appendChild(tr);
-    }
+    printList();
 
     document.getElementById('insert').addEventListener('click',() => {
         if(!isValid()){ return; }
@@ -41,19 +18,39 @@ window.onload = function(){
 
         localStorage.setItem('todo_'+(Number(key)+1), JSON.stringify(todoList));
 
-        location.reload();
+        printList();
     });
 
-    document.getElementById('udpate').addEventListener('click',() => {
-        return;
+    document.getElementById('update').addEventListener('click',() => {
+        let isChecked = false;
+        for(let i=0; i < localStorage.length; i++){
+            if(document.getElementById(localStorage.key(i)).checked){
+                isChecked = true;
+                if(!isValid()){ return; }
+
+                const todoList = new Object();
+                todoList.todo = document.getElementById('todo').value;
+                todoList.fromDate = document.getElementById('fromDate').value;
+                todoList.toDate = document.getElementById('toDate').value;
+
+                localStorage.setItem(localStorage.key(i), JSON.stringify(todoList));
+
+                printList();
+            }
+        }
+
+        if(!isChecked){
+            alert('선택된 항목이 없습니다');
+            return;
+        }
     });
 
     document.getElementById('delete').addEventListener('click',() => {
-        return;
+        printList();
     });
 
     document.getElementById('complete').addEventListener('click',() => {
-        return;
+        printList();
     });
 
     document.getElementById('clear').addEventListener('click',() => {
@@ -84,4 +81,38 @@ function isValid(){
         return false;
     }
     return true;
+}
+
+function printList(){
+    const list = document.getElementById('todoList');
+
+    if(list.hasChildNodes()){
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
+    }
+    
+    for(let i =0; i < localStorage.length; i++){
+        const todoJson = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        const check = document.createElement('div');
+        const checkInput = document.createElement("input");
+        checkInput.setAttribute('type', 'checkbox');
+        checkInput.setAttribute('id', localStorage.key(i));
+        check.appendChild(checkInput);
+        const todo = document.createElement('div');
+        todo.appendChild(document.createTextNode(todoJson.todo));
+        const fromDate = document.createElement('div');
+        fromDate.appendChild(document.createTextNode(todoJson.fromDate));
+        const toDate = document.createElement('div');
+        toDate.appendChild(document.createTextNode(todoJson.toDate));
+
+        const tr = document.createElement('div');
+        tr.classList.add('tr');
+        tr.appendChild(check);
+        tr.appendChild(todo);
+        tr.appendChild(fromDate);
+        tr.appendChild(toDate);
+
+        list.appendChild(tr);
+    }
 }

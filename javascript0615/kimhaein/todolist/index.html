@@ -16,7 +16,7 @@
           <span id="total_tasks"></span>
         </section>
         <section class="input_wrap">
-          <form id="todoForm">
+          <form id="todoForm" onsubmit="onSubmit(event)">
             <div class="task">
               <label for="task">Task</label>
               <input type="text" name="task" id="task" required />

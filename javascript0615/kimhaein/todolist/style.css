@@ -51,23 +51,23 @@ body {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-.title {
+#title {
   overflow: hidden;
   padding: 30px 20px 20px;
   border-bottom: solid 1px #dfdfea;
 }
-.title h1 {
+#title h1 {
   float: left;
   font-size: 30px;
   line-height: 32px;
   color: #ed6961;
 }
-.title h1 span {
+#title h1 span {
   margin-left: 10px;
   font-size: 20px;
   color: #a6a6b8;
 }
-.title .total_tasks {
+#title #total_tasks {
   float: right;
   margin-top: 35px;
   font-size: 25px;
@@ -96,7 +96,7 @@ body {
   box-sizing: border-box;
 }
 .input_wrap .task {
-  width: 58%;
+  width: 85%;
 }
 .input_wrap .time {
   width: 25%;
@@ -119,12 +119,12 @@ button img {
   overflow-y: auto;
   max-height: 414px;
 }
-.list_wrap {
+#list_wrap {
   display: table;
   width: 100%;
   border-collapse: collapse;
 }
-.list_wrap .list {
+#list_wrap .list {
   display: table-row;
   overflow: hidden;
   /* width:calc(100% - 40px); */
@@ -132,15 +132,15 @@ button img {
   /* padding:0 20px; */
   border-bottom: 1px solid #dfdfea;
 }
-.list_wrap .list > div {
+#list_wrap .list > div {
   display: table-cell;
   vertical-align: middle;
 }
-.list_wrap .list .checkbox_wrap {
+#list_wrap .list .checkbox_wrap {
   width: 30px;
   padding-left: 20px;
 }
-.list_wrap .list .checkbox_wrap label {
+#list_wrap .list .checkbox_wrap label {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -150,14 +150,14 @@ button img {
   background-size: contain;
   cursor: pointer;
 }
-.list_wrap .list .checkbox_wrap input {
+#list_wrap .list .checkbox_wrap input {
   display: none;
 }
-.list_wrap .list .checkbox_wrap input:checked + label {
+#list_wrap .list .checkbox_wrap input:checked + label {
   background-image: url("./images/checked.png");
 }
 
-.list_wrap .list .task_wrap .task_contents {
+#list_wrap .list .task_wrap .task_contents {
   float: left;
   height: 20px;
   line-height: 22px;
@@ -165,25 +165,31 @@ button img {
   color: #8e8ea6;
   font-size: 16px;
 }
-.list_wrap .list .task_wrap input.task_contents {
+
+#list_wrap .list .task_wrap .task_contents.line {
+  text-decoration: line-through;
+  color: #ddd;
+}
+
+#list_wrap .list .task_wrap input.task_contents {
   width: 70%;
 }
-.list_wrap .list .task_wrap .time_contents {
+#list_wrap .list .task_wrap .time_contents {
   float: left;
   height: 20px;
   line-height: 22px;
   font-size: 12px;
   color: #ed6961;
 }
-.list_wrap .list .task_wrap input.time_contents {
+#list_wrap .list .task_wrap input.time_contents {
   width: 20%;
 }
-.list_wrap .btn_wrap {
+#list_wrap .btn_wrap {
   width: 48px;
   padding-right: 20px;
   text-align: right;
 }
-.list_wrap .btn_wrap span {
+#list_wrap .btn_wrap span {
   display: block;
   float: left;
   width: 14px;
@@ -192,12 +198,13 @@ button img {
   background-size: cover;
   cursor: pointer;
 }
-.list_wrap .btn_wrap span.modify {
+#list_wrap .btn_wrap span.modify {
   background-image: url("./images/edit.png");
 }
-.list_wrap .btn_wrap span.trash {
+#list_wrap .btn_wrap span.trash {
   background-image: url("./images/trash.png");
 }
-.list_wrap .btn_wrap span.completed {
+#list_wrap .btn_wrap span.completed {
+  float: right;
   background-image: url("./images/completed.png");
 }

@@ -19,7 +19,7 @@ function saveToDo(form) {
 
 //로컬에 저장 !
 function saveLocal() {
-    localStorage.setItem(localList, JSON.stringify(toDoList)); //localstorage에 저장할 때, String으로 저장해주어야 함.
+    localStorage.setItem(localList, JSON.stringify(toDoList));
 }
 
 //기존데이터 불러와서 
@@ -37,9 +37,32 @@ function loadToDo() {
 //기존 데이터 리스트에 저장
 function savedlist(text) {
     let num = toDoList.length + 1
+    const li = document.createElement("li");
+    li.id = num;
+
+    li.innerHTML = `<label>
+<input type="checkbox" />
+<span> 1st TO DO</span>
+<input type="button" class="btn-small purple darken-4" value="del" />
+<input type="button" class="btn-small purple darken-4" value="edit" />
+</label>`
+    console.log(li.innerHTML);
+    listBox.appendChild(li);
     const toDo = {
         num,
         contents: text
     };
     toDoList.push(toDo);
+}
+
+function handleSubmit(event) {
+    event.preventDefault();
+    const currentValue = inputToDo.value;
+    paintToDo(currentValue);
+    inputToDo.value = "";
+}
+
+function init() {
+    loadToDos();
+    formToDo.addEventListener("submit", handleSubmit);
 }

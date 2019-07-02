@@ -10,9 +10,9 @@ function saveToDo(form) {
     };
     toDoList.push(toDo);
     console.log(JSON.stringify(toDoList));
-    saveToDos();
+    saveLocal();
 }
 
-function saveToDos() {
+function saveLocal() {
     localStorage.setItem("list", JSON.stringify(toDoList)); //localstorage에 저장할 때, String으로 저장해주어야 함.
 }

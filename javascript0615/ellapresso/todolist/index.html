@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>TO DO LIST</title>
         <link rel="stylesheet" href="./reset.css" />
         <link rel="stylesheet" href="./todo.css" />
     </head>
+
     <body>
         <div class="inputBox">
-            <form>
-                <input type="text" placeholder="INPUT TO DO"/>
-                <input type="button" value="enter">
+            <form class="formTodo" onsubmit="return saveToDo(this);">
+                <input class="inputTodo" name="inputTD" type="text" placeholder="INPUT TO DO" />
+                <button type="submit">enter</button>
             </form>
         </div>
         <div class="listBox">
-            <input type="button" value="del"/>
-            <input type="button" value="edit"/>
-            <input type="checkbox" id="1">
+            <input type="button" value="del" />
+            <input type="button" value="edit" />
+            <input type="checkbox" id="1" />
             <label for="1">1st TO DO</label>
         </div>
         <div class="listBox">
-            <input type="button" value="del"/>
-            <input type="button" value="edit"/>
-            <input type="checkbox" id="2">
+            <input type="button" value="del" />
+            <input type="button" value="edit" />
+            <input type="checkbox" id="2" />
             <label for="2">2st TO DO</label>
         </div>
+        <script src="todo.js"></script>
     </body>
+
 </html>

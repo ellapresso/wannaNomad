@@ -1,28 +1,66 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <title>TO DO LIST</title>
         <link rel="stylesheet" href="./reset.css" />
-        <link rel="stylesheet" href="./todo.css" />
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     </head>
+
     <body>
-        <div class="inputBox">
-            <form>
-                <input type="text" placeholder="INPUT TO DO"/>
-                <input type="button" value="enter">
-            </form>
+        <div class="container row">
+            <div class="inputBox">
+                <form class="formTodo" onsubmit="return saveToDo(this);">
+                    <div class="input-field col s8">
+                        <input class="inputTodo" name="inputTD" type="text" placeholder="INPUT TO DO" />
+                    </div>
+                </form>
+            </div>
+            <div class="row ">
+                <ul class="collection with-header col s8 ">
+                    <li class="collection-header listBox">
+                        <h4>TO DO LIST</h4>
+                        <!-- </li>
+                    <li class="collection-item">
+                        <label>
+                            <input type="checkbox" />
+                            <span> 1st TO DO</span>
+                            <input type="button" class="btn-small purple darken-4" value="del" />
+                            <input type="button" class="btn-small purple darken-4" value="edit" />
+                        </label>
+                    </li>
+                    <li class="collection-item">
+                        <label>
+                            <input type="checkbox" />
+                            <span> 1st TO DO</span>
+                            <input type="button" class="btn-small purple darken-4" value="del" />
+                            <input type="button" class="btn-small purple darken-4" value="edit" />
+                        </label>
+                    </li>
+                    <li class="collection-item">
+                        <label>
+                            <input type="checkbox" />
+                            <span> 1st TO DO</span>
+                            <input type="button" class="btn-small purple darken-4" value="del" />
+                            <input type="button" class="btn-small purple darken-4" value="edit" />
+                        </label>
+                    </li>
+                    <li class="collection-item">
+                        <label>
+                            <input type="checkbox" />
+                            <span> 1st TO DO</span>
+                            <input type="button" class="btn-small purple darken-4" value="del" />
+                            <input type="button" class="btn-small purple darken-4" value="edit" />
+                        </label>
+                    </li> -->
+                </ul>
+            </div>
         </div>
-        <div class="listBox">
-            <input type="button" value="del"/>
-            <input type="button" value="edit"/>
-            <input type="checkbox" id="1">
-            <label for="1">1st TO DO</label>
-        </div>
-        <div class="listBox">
-            <input type="button" value="del"/>
-            <input type="button" value="edit"/>
-            <input type="checkbox" id="2">
-            <label for="2">2st TO DO</label>
-        </div>
+        <script src="todo.js"></script>
     </body>
+
 </html>

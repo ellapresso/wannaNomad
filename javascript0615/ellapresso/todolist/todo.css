@@ -1,0 +1,9 @@
+ul,
+li {
+    position: relative;
+}
+
+ul input {
+    position: absolute;
+    right: 0px;
+}

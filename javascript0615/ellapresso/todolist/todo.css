@@ -1,9 +1,4 @@
-ul,
-li {
-    position: relative;
-}
-
 ul input {
-    position: absolute;
-    right: 0px;
+	float: right;
+	margin-left: 10px;
 }

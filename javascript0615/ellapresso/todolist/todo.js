@@ -37,13 +37,13 @@ function loadToDo() {
 function savedlist(text) {
     let num = toDoList.length + 1
     const li = document.createElement("li");
-    li.id = "todo" + num;
+    li.id = num;
     li.className = "collection-item"
     li.innerHTML = `<label>
 <input type="checkbox" />
 <span>` + text + `</span>
-<input type="button" class="btn-small purple darken-4" value="del" />
-<input type="button" class="btn-small purple darken-4" value="edit" />
+<input type="button" class="btn-small purple darken-4" onClick="deleteList(this)" value="del" />
+<input type="button" class="btn-small purple darken-4" onClick="editList(this)" value="edit" />
 </label>`
     listBox.appendChild(li);
     const toDo = {
@@ -51,6 +51,16 @@ function savedlist(text) {
         contents: text
     };
     toDoList.push(toDo);
+}
+
+function deleteList(v) {
+    const del = v.parentNode.parentNode;
+    listBox.removeChild(del);
+    const cleanToDo = toDoList.filter(function (toDo) {
+        return toDo.num !== parseInt(del.id);
+    });
+    toDoList = cleanToDo;
+    saveLocal();
 }
 
 loadToDo();

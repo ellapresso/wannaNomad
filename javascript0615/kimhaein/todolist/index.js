@@ -1,13 +1,9 @@
+// Event class
 class TodoEvent {
-  constructor(props) {
-    console.log("TodoEvent");
-    if (!props) {
-      alert("target을 선언해주세요");
-    }
-    this.target = props;
-    this.list = JSON.parse(localStorage.getItem(this.target.todoList)) || {};
+  constructor() {
+    this.list = JSON.parse(localStorage.getItem("todoList")) || {};
     this.totalCnt = Object.keys(this.list).length || 0;
-    this.currId = Number(Object.keys(this.list)[this.totalCnt - 1]) || 0;
+    this.currId = +Object.keys(this.list)[this.totalCnt - 1] || 0;
     this.setInit();
   }
 
@@ -19,30 +15,30 @@ class TodoEvent {
       ...this.list,
       [++this.currId]: {
         id: this.currId,
-        task: document.getElementById(this.target.input).value,
+        task: document.getElementById("task").value,
         checked: false
       }
     };
-    this.utilSetStore(this.target.todoList, this.list);
+    this.utilSetStore("todoList", this.list);
     this.renderList();
   }
   // 리스트 삭제
   onListDelete(id) {
     delete this.list[id];
-    this.utilSetStore(this.target.todoList, this.list);
+    this.utilSetStore("todoList", this.list);
     this.renderList();
   }
   // 리스트 수정
   onEdit(id) {
     this.utilTargetList(id);
     this.list[id].task = this.targetList.querySelector(".task_contents").value;
-    this.utilSetStore(this.target.todoList, this.list);
+    this.utilSetStore("todoList", this.list);
     this.renderList();
   }
   // 리스트 Check 상태 변경
   onChangeCheck(id, checked = false) {
     this.list[id].checked = checked;
-    this.utilSetStore(this.target.todoList, this.list);
+    this.utilSetStore("todoList", this.list);
     this.renderList();
   }
 
@@ -62,7 +58,7 @@ class TodoEvent {
     this.targetList = document.getElementById("list_" + id);
   }
 }
-
+// UI class
 class TodoList extends TodoEvent {
   constructor(props) {
     super(props);
@@ -84,7 +80,7 @@ class TodoList extends TodoEvent {
 
   // 리스트 총 갯수 설정
   setTotalCnt() {
-    document.getElementById(this.target.total).innerHTML = Object.keys(this.list).length + " Tasks";
+    document.getElementById("total_tasks").innerHTML = Object.keys(this.list).length + " Tasks";
   }
 
   // 리스트 조회 및 랜더
@@ -113,7 +109,7 @@ class TodoList extends TodoEvent {
         </div>`.trim();
     });
 
-    const target = document.getElementById(this.target.list);
+    const target = document.getElementById("list_wrap");
     target.innerHTML = htmls.join("");
     this.setTotalCnt();
   }
@@ -121,24 +117,17 @@ class TodoList extends TodoEvent {
   //수정 모드 전환
   onEditMode(id) {
     this.utilTargetList(id);
-
     this.targetList.querySelector(".task_wrap").innerHTML = `<input type="text" class="task_contents" value="${this.list[id].task}"/>`;
     this.targetList.querySelector(".btn_wrap").innerHTML = `<span class="completed" data-id="${id}" onclick="onEdit(event)"></span>`;
     this.targetList.querySelector(".task_contents").focus();
   }
 }
 
-const target = {
-  header: "title",
-  todoList: "todoList",
-  total: "total_tasks",
-  list: "list_wrap",
-  input: "task"
-};
-
 const todolist = new TodoList(target);
 
-// 리스트 등록
+// 이벤트 등록
+
+// 리스트 저장
 const onSubmit = event => {
   event.preventDefault();
   todolist.utilEvt(event.currentTarget, todolist.onSubmit);

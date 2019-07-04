@@ -1,6 +1,7 @@
 const formToDo = document.querySelector('.formTodo'),
     inputToDo = document.querySelector('.inputTodo'),
-    listBox = document.querySelector('.listBox');
+    listBox = document.querySelector('.listBox'),
+    chkBox = document.querySelector('.chkBox');
 
 let toDoList = [];
 const localList = 'localList';
@@ -41,7 +42,7 @@ function savedlist(text) {
     li.className = 'collection-item';
     li.innerHTML =
         `<label class="col s12">
-<input type="checkbox" />
+<input class="chkBox" id="` + num + `" type="checkbox" onClick="finish(this)"/>
 <span>` +
         text +
         `</span>
@@ -68,9 +69,8 @@ function deleteList(v) {
 
 function editList(v) {
     const id = v.parentNode.parentNode.id;
-    console.log(document.getElementById(id).innerHTML)
     document.getElementById(id).innerHTML = `<form id="` + id + `"onsubmit="return editToDo(this);">
-<div class="input-field col s10">
+<div class="input-field col s12">
 <input class="inputTodo" name="inputTD" type="text" value="` + toDoList[id - 1].contents + `"placeholder="EDIT TO DO"  autocomplete="off"/>
 </div></form>
 `
@@ -82,5 +82,8 @@ function editToDo(form) {
     saveLocal()
 }
 
-
+function finish(v) {
+    v.disabled = "disabled";
+    v.parentNode.style.color = "#e7e7e7"
+}
 loadToDo();

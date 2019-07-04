@@ -40,7 +40,7 @@ function savedlist(text) {
     li.id = num;
     li.className = 'collection-item';
     li.innerHTML =
-        `<label>
+        `<label class="col s12">
 <input type="checkbox" />
 <span>` +
         text +
@@ -71,7 +71,7 @@ function editList(v) {
     console.log(document.getElementById(id).innerHTML)
     document.getElementById(id).innerHTML = `<form id="` + id + `"onsubmit="return editToDo(this);">
 <div class="input-field col s10">
-<input class="inputTodo" name="inputTD" type="text" value="` + toDoList[id - 1].contents + `"placeholder="INPUT TO DO" />
+<input class="inputTodo" name="inputTD" type="text" value="` + toDoList[id - 1].contents + `"placeholder="EDIT TO DO"  autocomplete="off"/>
 </div></form>
 `
 }
@@ -81,5 +81,6 @@ function editToDo(form) {
     toDoList[id].contents = form.inputTD.value;
     saveLocal()
 }
+
 
 loadToDo();

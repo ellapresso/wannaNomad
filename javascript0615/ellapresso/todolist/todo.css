@@ -1,4 +1,16 @@
 ul input {
-	float: right;
-	margin-left: 10px;
+    float: right;
+    margin-left: 10px;
+}
+
+li {
+    overflow: hidden;
+}
+
+.input-field.col.s10 {
+    margin: 0;
+}
+
+label.col.s12 {
+    line-height: 3;
 }

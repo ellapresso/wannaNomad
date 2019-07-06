@@ -28,14 +28,19 @@ window.onload = function(){
                 isChecked = true;
                 if(!isValid()){ return; }
 
-                const todoList = new Object();
-                todoList.todo = document.getElementById('todo').value;
-                todoList.fromDate = document.getElementById('fromDate').value;
-                todoList.toDate = document.getElementById('toDate').value;
+                const confirm = window.confirm("수정하시겠습니까?");
 
-                localStorage.setItem(localStorage.key(i), JSON.stringify(todoList));
-
-                printList();
+                if (confirm) {
+                    const todoList = new Object();
+                    todoList.todo = document.getElementById('todo').value;
+                    todoList.fromDate = document.getElementById('fromDate').value;
+                    todoList.toDate = document.getElementById('toDate').value;
+    
+                    localStorage.setItem(localStorage.key(i), JSON.stringify(todoList));
+    
+                    printList();
+                }
+                
             }
         }
 
@@ -46,6 +51,26 @@ window.onload = function(){
     });
 
     document.getElementById('delete').addEventListener('click',() => {
+        let isChecked = false;
+        for(let i=0; i < localStorage.length; i++){
+            if(document.getElementById(localStorage.key(i)).checked){
+                isChecked = true;
+
+                const confirm = window.confirm("삭제하시겠습니까?");
+
+                if (confirm) {
+                    localStorage.removeItem(localStorage.key(i));
+
+                    printList();
+                }
+            }
+        }
+
+        if(!isChecked){
+            alert('선택된 항목이 없습니다');
+            return;
+        }
+
         printList();
     });
 

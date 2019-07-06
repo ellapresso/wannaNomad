@@ -9,7 +9,7 @@ window.onload = function(){
 
         if(localStorage.length > 0){
             const keyString = localStorage.key(localStorage.length - 1);
-            key = keyString.charAt(keyString.length - 1);
+            key = keyString.substring(keyString.indexOf('_') + 1, keyString.length);  
         }
 
         todoList.todo = document.getElementById('todo').value;

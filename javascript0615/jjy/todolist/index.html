@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <title>바닐라 자바스크립트</title>
     <link rel="stylesheet" href="./reset.css" />
     <link rel="stylesheet" href="./style.css" />
@@ -20,34 +21,37 @@
               <label for="task">Task</label>
               <input type="text" name="task" id="task" required />
             </div>
-            <div class="time">
-              <label for="time">Time</label>
-              <input type="time" name="time" id="time" />
-            </div>
-            <button type="submit" class="submit">
+<!--            <div class="time">-->
+<!--              <label for="time">Time</label>-->
+<!--              <input type="time" name="time" id="time" />-->
+<!--            </div>-->
+            <button type="submit" class="submit" onclick="addTodo()">
               <img src="./images/plus.png" alt="submit" />
             </button>
           </form>
         </section>
-        <section class="list_container">
-          <div class="list_wrap">
-            <div class="list">
-              <div class="checkbox_wrap">
-                <input type="checkbox" name="check" id="checkbox01" />
-                <label for="checkbox01"></label>
-              </div>
-              <div class="task_wrap">
-                <span class="task_contents">물마시기</span>
-                <span class="time_contents">10:00</span>
-              </div>
-              <div class="btn_wrap">
-                <span class="modify"></span>
-                <span class="trash"></span>
-              </div>
+        <section class="list_container" >
+          <div class="list_wrap" id="list">
+          <div class="list">
+            <div class="checkbox_wrap">
+              <input type="checkbox" name="check" id="checkbox01" />
+              <label for="checkbox01"></label>
+            </div>
+            <div class="task_wrap" id="todoList">
+              <span class="task_contents">물마시기</span>
+              <span class="time_contents">10:00</span>
+            </div>
+            <div class="btn_wrap">
+              <span class="modify"></span>
+              <span class="trash"></span>
             </div>
           </div>
+        </div>
+
         </section>
       </article>
     </div>
+    <script type="text/javascript" src="./index.js" >
+    </script>
   </body>
 </html>

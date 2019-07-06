@@ -123,7 +123,7 @@ class TodoList extends TodoEvent {
   }
 }
 
-const todolist = new TodoList(target);
+const todolist = new TodoList();
 
 // 이벤트 등록
 

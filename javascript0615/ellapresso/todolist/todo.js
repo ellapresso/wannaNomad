@@ -87,3 +87,6 @@ function finish(v) {
     v.parentNode.style.color = "#e7e7e7"
 }
 loadToDo();
+
+
+//삭제하고 새로 등록시 num값 중복 발생.

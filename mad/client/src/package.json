@@ -19,7 +19,7 @@
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "antd": "^3.16.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "codemirror": "^5.45.0",
     "marked": "^0.6.2",
     "moment": "^2.24.0",

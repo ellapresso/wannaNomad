@@ -24,7 +24,7 @@
     "marked": "^0.6.2",
     "moment": "^2.24.0",
     "next": "^8.0.3",
-    "prismjs": "^1.16.0",
+    "prismjs": "^1.23.0",
     "randomcolor": "^0.5.4",
     "react": "^16.8.6",
     "react-codemirror2": "^5.1.0",
